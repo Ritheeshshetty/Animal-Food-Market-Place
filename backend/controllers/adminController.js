@@ -35,7 +35,6 @@ export const deleteOrder = async (req, res) => {
   res.json({ message: 'Order deleted' });
 };
 
-// adminController.js
 export const updateOrderStatus = async (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
@@ -48,4 +47,86 @@ export const updateOrderStatus = async (req, res) => {
   const updated = await Order.findByIdAndUpdate(id, { status }, { new: true });
   if (!updated) return res.status(404).json({ message: 'Order not found' });
   res.json(updated);
+};
+
+export const approveSupplier = async (req, res) => {
+  const user = await User.findById(req.params.id);
+  if (!user || user.role !== 'supplier') {
+    return res.status(404).json({ message: 'Supplier not found' });
+  }
+
+  user.isApproved = true;
+  await user.save();
+
+  res.json({ message: 'Supplier approved successfully' });
+};
+
+// Analytics
+export const getAnalytics = async (req, res) => {
+  try {
+    const orders = await Order.find({ status: 'delivered' });
+    const totalSales = orders.reduce((sum, order) => sum + order.totalAmount, 0);
+
+    const activeUsers = await User.countDocuments({ role: 'customer' });
+    const activeSuppliers = await User.countDocuments({ role: 'supplier', isApproved: true });
+
+    const productStats = {};
+    for (const order of orders) {
+      for (const item of order.items) {
+        const productId = item.product.toString();
+        productStats[productId] = (productStats[productId] || 0) + item.quantity;
+      }
+    }
+
+    const topProducts = await Promise.all(
+      Object.entries(productStats)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 5)
+        .map(async ([productId, count]) => {
+          const product = await Product.findById(productId);
+          return { product, count };
+        })
+    );
+
+    const now = new Date();
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(now.getDate() - 7);
+
+    const recentOrders = await Order.find({
+      status: 'delivered',
+      createdAt: { $gte: sevenDaysAgo }
+    });
+
+    const dailySales = {};
+    recentOrders.forEach(order => {
+      const date = order.createdAt.toISOString().split('T')[0];
+      dailySales[date] = (dailySales[date] || 0) + order.totalAmount;
+    });
+
+    const lowStockProducts = await Product.find({ stock: { $lt: 10 } });
+
+    const supplierStats = {};
+    for (const order of orders) {
+      for (const item of order.items) {
+        const product = await Product.findById(item.product);
+        if (product && product.supplier) {
+          const supplierId = product.supplier.toString();
+          supplierStats[supplierId] = (supplierStats[supplierId] || 0) + item.quantity;
+        }
+      }
+    }
+
+    res.json({
+      totalSales,
+      activeUsers,
+      activeSuppliers,
+      topProducts,
+      dailySales,
+      lowStockProducts,
+      supplierStats
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Failed to fetch analytics' });
+  }
 };

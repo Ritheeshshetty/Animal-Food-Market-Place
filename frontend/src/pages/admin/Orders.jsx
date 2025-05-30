@@ -144,7 +144,7 @@ export default function Orders() {
                     Total: ₹{order.totalAmount}
                   </div>
                   <button
-                    className="delete-btn-admin"
+                    className="delete-btn"
                     onClick={() => deleteOrder(order._id)}
                   >
                     <FiTrash2 className="icon" />

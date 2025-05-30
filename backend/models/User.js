@@ -9,8 +9,12 @@ const userSchema = new mongoose.Schema({
     enum: ['customer', 'supplier', 'admin'],
     default: 'customer',
   },
+  isApproved: {
+    type: Boolean,
+    default: function () {
+      return this.role === 'supplier' ? false : true;
+    },
+  },
 }, { timestamps: true });
 
-const User = mongoose.model('User', userSchema);
-export default User;
-
+export default mongoose.model('User', userSchema);

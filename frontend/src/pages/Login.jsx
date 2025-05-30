@@ -52,7 +52,12 @@ const handleSubmit = async (e) => {
 
   try {
     const res = await api.post('/auth/login', { email, password });
-    const role = res.data.user.role;
+    const { role, isApproved } = res.data.user;
+
+    if (role === 'supplier' && !isApproved) {
+      alert('Your account is pending admin approval.');
+      return;
+    }
 
     if (role === 'admin') navigate('/admin/users');
     else if (role === 'supplier') navigate('/supplier');
@@ -61,6 +66,7 @@ const handleSubmit = async (e) => {
     alert(err.response?.data?.message || 'Login failed');
   }
 };
+
 
 
   return (

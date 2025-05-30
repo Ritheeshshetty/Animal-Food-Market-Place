@@ -9,6 +9,8 @@ import {
   getAllOrders,
   deleteOrder,
   updateOrderStatus,
+  approveSupplier,
+  getAnalytics,
 } from '../controllers/adminController.js';
 
 const router = express.Router();
@@ -27,4 +29,12 @@ router.delete('/orders/:id', authMiddleware, adminMiddleware, deleteOrder);
 
 
 router.put('/orders/:id/status', authMiddleware, adminMiddleware, updateOrderStatus);
+
+
+router.put('/suppliers/approve/:id', authMiddleware, adminMiddleware, approveSupplier);
+
+
+
+// Analytics route
+router.get('/analytics', authMiddleware, adminMiddleware, getAnalytics);
 export default router;

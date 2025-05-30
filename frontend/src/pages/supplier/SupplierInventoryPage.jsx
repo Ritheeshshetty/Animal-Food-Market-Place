@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../api';
-import { FiEdit2, FiPlus, FiTrash2 } from 'react-icons/fi';
+import { FiEdit2, FiPlus, FiTrash2, FiPackage, FiArrowLeft } from 'react-icons/fi';
 import { FaDog, FaCat, FaDove, FaHorse } from 'react-icons/fa';
 import { GiCow } from 'react-icons/gi';
 
 function SupplierInventoryPage() {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   const animalIcons = {
@@ -21,10 +22,13 @@ function SupplierInventoryPage() {
   useEffect(() => {
     const fetchMyProducts = async () => {
       try {
+        setLoading(true);
         const res = await api.get('/products/my', { withCredentials: true });
         setProducts(res.data);
       } catch (err) {
         alert('Failed to fetch products');
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -52,88 +56,105 @@ function SupplierInventoryPage() {
   };
 
   return (
-    <div className="inventory-container">
-      <div className="inventory-header">
-        <h2 className="inventory-title">Your Inventory</h2>
-        <button 
-          className="add-product-btn"
-          onClick={() => navigate('/supplier/add-product')}
-        >
-          <FiPlus /> Add Product
-        </button>
-      </div>
-
-      {products.length === 0 ? (
-        <div className="empty-state">
-          <p>You haven't added any products yet.</p>
+    <div className="supplier-dashboard">
+      <div className="supplier-container">
+         <button className="back-button" onClick={() => navigate(-1)}>
+                <FiArrowLeft /> Back
+          </button>
+        <div className="supplier-header">
+          <h1 className="supplier-title">
+            <FiPackage className="title-icon" />
+            Product Inventory
+          </h1>
           <button 
-            className="add-product-btn"
+            className="primary-btn"
             onClick={() => navigate('/supplier/add-product')}
           >
-            <FiPlus /> Add Your First Product
+            <FiPlus /> Add New Product
           </button>
         </div>
-      ) : (
-        <div className="inventory-table-container">
-          <table className="inventory-table">
-            <thead>
-              <tr>
-                <th>Product</th>
-                <th>Animal</th>
-                <th>Category</th>
-                <th>Stock</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {products.map((product) => (
-                <tr key={product._id}>
-                  <td>
-                    <div className="product-name">{product.name}</div>
-                    <div className="product-category">{product.category}</div>
-                  </td>
-                  <td>
-                    <div className="animal-cell">
-                      {animalIcons[product.animalType]}
-                      <span>{product.animalType}</span>
-                    </div>
-                  </td>
-                  <td>
-                    <span className={`category-badge ${product.category}`}>
-                      {product.category}
+
+        {loading ? (
+          <div className="loading-state">
+            <div className="spinner"></div>
+            <p>Loading your inventory...</p>
+          </div>
+        ) : products.length === 0 ? (
+          <div className="empty-state">
+            <FiPackage className="empty-icon" />
+            <h3>Your inventory is empty</h3>
+            <p>Get started by adding your first product</p>
+            <button 
+              className="primary-btn"
+              onClick={() => navigate('/supplier/add-product')}
+            >
+              <FiPlus /> Add Product
+            </button>
+          </div>
+        ) : (
+          <div className="inventory-grid">
+            <div className="inventory-table-header">
+              <div className="header-cell product">Product</div>
+              <div className="header-cell animal">Animal</div>
+              <div className="header-cell category">Category</div>
+              <div className="header-cell stock">Stock Level</div>
+              <div className="header-cell actions">Actions</div>
+            </div>
+
+            {products.map((product) => (
+              <div className="inventory-card" key={product._id}>
+                <div className="card-cell product-info">
+                  <h3 className="product-name">{product.name}</h3>
+                  <p className="product-ingredients">
+                    {product.ingredients?.slice(0, 3).join(', ')}
+                    {product.ingredients?.length > 3 ? '...' : ''}
+                  </p>
+                </div>
+
+                <div className="card-cell animal-info">
+                  <div className="animal-type">
+                    {animalIcons[product.animalType]}
+                    <span>{product.animalType}</span>
+                  </div>
+                </div>
+
+                <div className="card-cell category-info">
+                  <span className={`category-tag ${product.category}`}>
+                    {product.category === 'pet' ? 'Pet Food' : 'Livestock Feed'}
+                  </span>
+                </div>
+
+                <div className="card-cell stock-info">
+                  <div className="stock-meter">
+                    <div 
+                      className="stock-fill" 
+                      style={{ width: `${Math.min(100, calculateTotalStock(product.quantityOptions))}%` }}
+                    ></div>
+                    <span className="stock-count">
+                      {calculateTotalStock(product.quantityOptions)} units
                     </span>
-                  </td>
-                  <td>
-                    <div className="stock-indicator">
-                      <div 
-                        className="stock-bar" 
-                        style={{ width: `${Math.min(100, calculateTotalStock(product.quantityOptions))}%` }}
-                      />
-                      <span>{calculateTotalStock(product.quantityOptions)} in stock</span>
-                    </div>
-                  </td>
-                  <td>
-                    <div className="action-buttons">
-                      <button 
-                        className="edit-btn"
-                        onClick={() => handleUpdate(product._id)}
-                      >
-                        <FiEdit2 /> Edit
-                      </button>
-                      <button 
-                        className="delete-btn-supplier"
-                        onClick={() => handleDelete(product._id)}
-                      >
-                        <FiTrash2 />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+                  </div>
+                </div>
+
+                <div className="card-cell action-buttons">
+                  <button 
+                    className="edit-btn"
+                    onClick={() => handleUpdate(product._id)}
+                  >
+                    <FiEdit2 /> Edit
+                  </button>
+                  <button 
+                    className="delete-btn"
+                    onClick={() => handleDelete(product._id)}
+                  >
+                    <FiTrash2 /> Delete
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

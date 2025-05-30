@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import api from '../../api';
 import AdminNav from '../../components/AdminNav';
-import { FiTrash2, FiUser, FiUserCheck, FiShield } from 'react-icons/fi';
+import { FiTrash2, FiUser, FiUserCheck, FiShield, FiCheckCircle } from 'react-icons/fi';
 import { RiAdminLine } from 'react-icons/ri';
 
 export default function Users() {
@@ -37,7 +37,16 @@ export default function Users() {
     }
   };
 
-  const filteredUsers = users.filter(user => 
+  const approveSupplier = async (id) => {
+    try {
+      await api.put(`/admin/suppliers/approve/${id}`);
+      fetchUsers();
+    } catch (err) {
+      alert('Failed to approve supplier');
+    }
+  };
+
+  const filteredUsers = users.filter(user =>
     user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     user.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -49,7 +58,7 @@ export default function Users() {
   return (
     <div className="admin-dashboard-users">
       <AdminNav />
-      
+
       <div className="admin-container-users">
         <div className="admin-header-users">
           <div>
@@ -84,7 +93,7 @@ export default function Users() {
               <div className="header-cell role">Role</div>
               <div className="header-cell actions">Actions</div>
             </div>
-            
+
             <div className="table-body">
               {filteredUsers.map(user => (
                 <div className="user-row" key={user._id}>
@@ -97,26 +106,37 @@ export default function Users() {
                       <div className="user-id">ID: {user._id.slice(-6)}</div>
                     </div>
                   </div>
-                  
-                  <div className="user-cell email">
-                    {user.email}
-                  </div>
-                  
+
+                  <div className="user-cell email">{user.email}</div>
+
                   <div className="user-cell role">
                     <div className={`role-badge ${user.role}`}>
                       {roleIcons[user.role]}
-                      <span>{user.role}</span>
+                      <span>
+                        {user.role}
+                        {user.role === 'supplier' && !user.isApproved && ' (Pending)'}
+                      </span>
                     </div>
                   </div>
-                  
+
                   <div className="user-cell actions">
                     {user.role !== 'admin' && (
-                      <button 
-                        className="delete-btn"
-                        onClick={() => deleteUser(user._id)}
-                      >
-                        <FiTrash2 /> Delete
-                      </button>
+                      <>
+                        {!user.isApproved && user.role === 'supplier' && (
+                          <button
+                            className="approve-btn"
+                            onClick={() => approveSupplier(user._id)}
+                          >
+                            <FiCheckCircle /> Approve
+                          </button>
+                        )}
+                        <button
+                          className="delete-btn"
+                          onClick={() => deleteUser(user._id)}
+                        >
+                          <FiTrash2 /> Delete
+                        </button>
+                      </>
                     )}
                   </div>
                 </div>
