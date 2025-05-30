@@ -170,7 +170,7 @@ export default function AdminDashboard() {
               {/* Supplier Performance */}
               <div className="admin-list-card-main">
                 <h3 className="admin-list-title-main">Supplier Performance</h3>
-                {/* {analytics.supplierPerformance.length > 0 ? (
+                {analytics.supplierPerformance.length > 0 ? (
                   <ul className="admin-list-main">
                     {analytics.supplierPerformance.slice(0, 5).map((supplier, index) => (
                       <li key={index} className="admin-list-item-main">
@@ -189,7 +189,7 @@ export default function AdminDashboard() {
                     <FiUsers size={32} className="admin-empty-icon-main" />
                     <p>No supplier data available</p>
                   </div>
-                )} */}
+                )}
                 <span></span>
               </div>
             </div>
