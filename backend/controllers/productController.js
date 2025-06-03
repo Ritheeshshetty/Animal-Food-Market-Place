@@ -10,14 +10,32 @@ export const createProduct = async (req, res) => {
   }
 };
 
+
 export const getAllProducts = async (req, res) => {
   try {
-    const products = await Product.find().populate('supplier', 'name');
+    const { search, category, animalType } = req.query;
+
+    const query = {};
+
+    if (search) {
+      query.name = { $regex: search, $options: 'i' }; // case-insensitive search
+    }
+
+    if (category) {
+      query.category = category;
+    }
+
+    if (animalType) {
+      query.animalType = animalType;
+    }
+
+    const products = await Product.find(query).populate('supplier', 'name');
     res.json(products);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
+
 
 export const updateProduct = async (req, res) => {
   const productId = req.params.id;
@@ -52,3 +70,12 @@ export const getSupplierProducts = async (req, res) => {
   }
 };
 
+export const getProductById = async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id).populate('supplier', 'name');
+    if (!product) return res.status(404).json({ message: 'Product not found' });
+    res.json(product);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};

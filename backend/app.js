@@ -6,6 +6,7 @@ import productRoutes from './routes/productRoutes.js';
 import dotenv from 'dotenv';
 import orderRoutes from './routes/orderRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
+import supplierRoutes from './routes/supplierRoutes.js'
 import cookieParser from 'cookie-parser';
 
 dotenv.config();
@@ -25,5 +26,6 @@ app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/supplier', supplierRoutes);
 
 export default app;

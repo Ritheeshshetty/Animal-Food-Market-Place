@@ -104,11 +104,7 @@ export const getAnalytics = async (req, res) => {
       createdAt: { $gte: sevenDaysAgo },
     });
 
-    // const dailySales = {};
-    // recentOrders.forEach(order => {
-    //   const date = order.createdAt.toISOString().split('T')[0];
-    //   dailySales[date] = (dailySales[date] || 0) + order.totalAmount;
-    // });
+  
 
     const dailySalesMap = {};
     recentOrders.forEach((order) => {

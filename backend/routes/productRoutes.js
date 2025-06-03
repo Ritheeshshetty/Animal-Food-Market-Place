@@ -1,5 +1,5 @@
 import express from 'express';
-import { createProduct, getAllProducts,getSupplierProducts,updateProduct } from '../controllers/productController.js';
+import { createProduct, getAllProducts,getProductById,getSupplierProducts,updateProduct } from '../controllers/productController.js';
 import authMiddleware from '../middlewares/authMiddleware.js';
 import roleMiddleware from '../middlewares/roleMiddleware.js';
 
@@ -10,6 +10,8 @@ router.get('/', getAllProducts);
 router.post('/', authMiddleware,roleMiddleware('supplier'), createProduct);
 router.put('/:id', authMiddleware,roleMiddleware('supplier'), updateProduct);
 router.get('/my', authMiddleware, getSupplierProducts);
+router.get('/:id', authMiddleware,roleMiddleware('customer'),getProductById);
+
 
 
 export default router;

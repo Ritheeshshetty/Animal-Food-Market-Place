@@ -1,0 +1,329 @@
+/* Main container */
+.supplier-dashboard-main {
+  padding: 1rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Loading state */
+.supplier-dashboard-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.supplier-dashboard-loading-spinner {
+  font-size: 1.25rem;
+  color: #64748b;
+  animation: supplier-dashboard-pulse 2s infinite;
+}
+
+@keyframes supplier-dashboard-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Header */
+.supplier-dashboard-header-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.supplier-dashboard-header-content-main {
+  flex: 1;
+}
+
+.supplier-dashboard-title-main {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 0.25rem;
+}
+
+.supplier-dashboard-subtitle-main {
+  color: #64748b;
+  font-size: 1rem;
+}
+
+.supplier-dashboard-logout-button-main {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background-color: #fee2e2;
+  color: #dc2626;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.supplier-dashboard-logout-button-main:hover {
+  background-color: #fecaca;
+}
+
+.supplier-dashboard-logout-icon-main {
+  margin-right: 0.5rem;
+}
+
+/* Stats section */
+.supplier-dashboard-stats-main {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 640px) {
+  .supplier-dashboard-stats-main {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .supplier-dashboard-stats-main {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.supplier-dashboard-stat-card-main {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+}
+
+.supplier-dashboard-stat-icon-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  margin-right: 1rem;
+}
+
+.supplier-dashboard-stat-icon-products-main {
+  background-color: #dbeafe;
+  color: #3b82f6;
+}
+
+.supplier-dashboard-stat-icon-orders-main {
+  background-color: #fef3c7;
+  color: #f59e0b;
+}
+
+.supplier-dashboard-stat-icon-stock-main {
+  background-color: #fee2e2;
+  color: #ef4444;
+}
+
+.supplier-dashboard-stat-icon-sales-main {
+  background-color: #dcfce7;
+  color: #10b981;
+}
+
+.supplier-dashboard-stat-title-main {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin-bottom: 0.25rem;
+}
+
+.supplier-dashboard-stat-value-main {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+/* Dashboard grid */
+.supplier-dashboard-grid-main {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 640px) {
+  .supplier-dashboard-grid-main {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .supplier-dashboard-grid-main {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.supplier-dashboard-card-main {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.supplier-dashboard-card-main:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.supplier-dashboard-card-icon-main {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.supplier-dashboard-card-add-main .supplier-dashboard-card-icon-main {
+  background-color: #3b82f6;
+}
+
+.supplier-dashboard-card-inventory-main .supplier-dashboard-card-icon-main {
+  background-color: #10b981;
+}
+
+.supplier-dashboard-card-orders-main .supplier-dashboard-card-icon-main {
+  background-color: #f59e0b;
+}
+
+.supplier-dashboard-card-products-main .supplier-dashboard-card-icon-main {
+  background-color: #8b5cf6;
+}
+
+.supplier-dashboard-card-reports-main .supplier-dashboard-card-icon-main {
+  background-color: #ec4899;
+}
+
+.supplier-dashboard-card-reviews-main .supplier-dashboard-card-icon-main {
+  background-color: #14b8a6;
+}
+
+.supplier-dashboard-card-title-main {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 0.5rem;
+}
+
+.supplier-dashboard-card-text-main {
+  color: #64748b;
+  font-size: 0.875rem;
+}
+
+/* Recent orders */
+.supplier-dashboard-recent-orders-main {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.supplier-dashboard-section-title-main {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 1.5rem;
+}
+
+.supplier-dashboard-orders-table-main {
+  overflow-x: auto;
+}
+
+.supplier-dashboard-orders-table-main table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.supplier-dashboard-orders-table-main th,
+.supplier-dashboard-orders-table-main td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.supplier-dashboard-orders-table-main th {
+  font-weight: 600;
+  color: #64748b;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+}
+
+.supplier-dashboard-order-status-main {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.supplier-dashboard-order-status-pending-main {
+  background-color: #fef3c7;
+  color: #d97706;
+}
+
+.supplier-dashboard-order-status-processing-main {
+  background-color: #dbeafe;
+  color: #2563eb;
+}
+
+.supplier-dashboard-order-status-shipped-main {
+  background-color: #dcfce7;
+  color: #059669;
+}
+
+.supplier-dashboard-order-status-delivered-main {
+  background-color: #ecfdf5;
+  color: #047857;
+}
+
+.supplier-dashboard-order-status-cancelled-main {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.supplier-dashboard-order-action-main {
+  color: #3b82f6;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.supplier-dashboard-order-action-main:hover {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+.supplier-dashboard-no-orders-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  color: #64748b;
+  text-align: center;
+}
+
+.supplier-dashboard-no-orders-icon-main {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #cbd5e1;
+}

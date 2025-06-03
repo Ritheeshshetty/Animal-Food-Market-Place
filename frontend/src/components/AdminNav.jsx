@@ -9,7 +9,7 @@ export default function AdminNav() {
     try {
       await api.post('/auth/logout');
       alert('Logged out successfully');
-      navigate('/login');
+      navigate('/');
     } catch (err) {
       alert('Logout failed');
     }
