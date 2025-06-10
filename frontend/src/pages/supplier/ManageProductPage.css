@@ -1,0 +1,175 @@
+/* Main container */
+.manage-product-container-main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+/* Header */
+.manage-product-header-main {
+  margin-bottom: 2rem;
+}
+
+.manage-product-back-button-main {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  color: #3b82f6;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.5rem 0;
+  margin-bottom: 1rem;
+  transition: color 0.2s;
+}
+
+.manage-product-back-button-main:hover {
+  color: #2563eb;
+}
+
+.manage-product-back-icon-main {
+  margin-right: 0.5rem;
+}
+
+.manage-product-title-main {
+  display: flex;
+  align-items: center;
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 1rem;
+}
+
+.manage-product-title-icon-main {
+  margin-right: 0.75rem;
+  color: #3b82f6;
+}
+
+/* Error message */
+.manage-product-error-main {
+  padding: 1rem;
+  background-color: #fee2e2;
+  color: #dc2626;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  font-weight: 500;
+}
+
+/* Form */
+.manage-product-form-main {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.manage-product-form-group-main {
+  margin-bottom: 1.5rem;
+}
+
+.manage-product-form-label-main {
+  display: block;
+  font-weight: 500;
+  color: #1e293b;
+  margin-bottom: 0.5rem;
+}
+
+.manage-product-form-input-main,
+.manage-product-form-select-main,
+.manage-product-form-textarea-main {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.manage-product-form-input-main:focus,
+.manage-product-form-select-main:focus,
+.manage-product-form-textarea-main:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.manage-product-form-textarea-main {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.manage-product-form-hint-main {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin-top: 0.5rem;
+}
+
+/* Form row */
+.manage-product-form-row-main {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .manage-product-form-row-main {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Animal select */
+.manage-product-animal-select-main {
+  position: relative;
+}
+
+.manage-product-animal-icon-main {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #64748b;
+  font-size: 1.25rem;
+}
+
+/* Form actions */
+.manage-product-form-actions-main {
+  margin-top: 2rem;
+  text-align: right;
+}
+
+.manage-product-submit-button-main {
+  padding: 0.75rem 1.5rem;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.manage-product-submit-button-main:hover {
+  background-color: #2563eb;
+}
+
+/* Loading state */
+.manage-product-loading-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.manage-product-loading-spinner-main {
+  color: #64748b;
+  animation: manage-product-pulse 2s infinite;
+}
+
+@keyframes manage-product-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}

@@ -1,4 +1,4 @@
-body {
+/* body {
   margin: 0;
   padding: 0;
   background: linear-gradient(
@@ -17,6 +17,19 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+} */
+
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background-color: #f8fafc; /* light gray background */
+  color: #1e293b; /* dark gray text */
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 @keyframes GradientBackground {
@@ -56,272 +69,76 @@ body::before {
 
 /* customer-main ***********************************************/
 
-/* customer-dashboard */
-/* Main container */
-.customer-dashboard-main {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1rem;
-}
-
-/* Header section */
-.customer-dashboard-header-main {
-  margin-bottom: 2rem;
-  padding: 1.5rem;
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.customer-dashboard-title-main {
-  font-size: 1.75rem;
-  font-weight: 700;
-  color: #1e293b;
-  margin-bottom: 0.5rem;
-}
-
-.customer-dashboard-subtitle-main {
-  color: #64748b;
-  font-size: 1rem;
-}
-
-/* Quick actions */
-.customer-dashboard-actions-main {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-@media (min-width: 640px) {
-  .customer-dashboard-actions-main {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-.customer-dashboard-action-card-main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem 1rem;
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  text-decoration: none;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.customer-dashboard-action-card-main:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.customer-dashboard-action-icon-main {
-  font-size: 1.5rem;
-  color: #3b82f6;
-  margin-bottom: 0.75rem;
-}
-
-.customer-dashboard-action-label-main {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #1e293b;
-  text-align: center;
-}
-
-/* Section styling */
-.customer-dashboard-section-main {
-  margin-bottom: 2rem;
-}
-
-.customer-dashboard-section-title-main {
-  display: flex;
-  align-items: center;
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #1e293b;
-  margin-bottom: 1.5rem;
-}
-
-.customer-dashboard-section-icon-main {
-  margin-right: 0.75rem;
-  color: #3b82f6;
-}
-
-/* Products grid */
-.customer-dashboard-products-main {
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  gap: 1.5rem;
-}
-
-@media (min-width: 640px) {
-  .customer-dashboard-products-main {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 1024px) {
-  .customer-dashboard-products-main {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-/* Product card */
-.customer-dashboard-product-card-main {
-  background-color: white;
-  padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.customer-dashboard-product-card-main:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.customer-dashboard-product-header-main {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-}
-
-.customer-dashboard-product-category-main {
-  font-size: 0.75rem;
-  font-weight: 600;
-  padding: 0.25rem 0.5rem;
-  border-radius: 9999px;
-}
-
-.customer-dashboard-product-category-pet-main {
-  background-color: #dbeafe;
-  color: #3b82f6;
-}
-
-.customer-dashboard-product-category-livestock-main {
-  background-color: #dcfce7;
-  color: #10b981;
-}
-
-.customer-dashboard-product-rating-main {
-  display: flex;
-  align-items: center;
-  font-size: 0.875rem;
-  color: #64748b;
-}
-
-.customer-dashboard-product-rating-icon-main {
-  margin-right: 0.25rem;
-  color: #f59e0b;
-}
-
-.customer-dashboard-product-name-main {
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: #1e293b;
-  margin-bottom: 0.5rem;
-}
-
-.customer-dashboard-product-type-main {
-  font-size: 0.875rem;
-  color: #64748b;
-  margin-bottom: 1.5rem;
-}
-
-.customer-dashboard-product-footer-main {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.customer-dashboard-product-price-main {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #1e293b;
-}
-
-.customer-dashboard-product-button-main {
-  padding: 0.5rem 1rem;
-  background-color: #3b82f6;
-  color: white;
-  border-radius: 8px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  text-decoration: none;
-  transition: background-color 0.2s;
-}
-
-.customer-dashboard-product-button-main:hover {
-  background-color: #2563eb;
-}
-
-/* Browse button */
-.customer-dashboard-browse-main {
-  text-align: center;
-  margin-top: 2rem;
-}
-
-.customer-dashboard-browse-button-main {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  background-color: #10b981;
-  color: white;
-  border-radius: 8px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: background-color 0.2s;
-}
-
-.customer-dashboard-browse-button-main:hover {
-  background-color: #047857;
-}
-
 
 
 
 
 /* customer-navbar */
 /* Main navbar container */
-.navbar-main {
+
+/* Base Styles */
+.navbar {
   background-color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 0.75rem 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  padding: 0.75rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: sticky;
   top: 0;
   z-index: 1000;
+  height: 70px;
 }
 
-/* Brand section */
-.navbar-brand-main {
+/* Brand Section */
+.navbar-brand {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  transition: transform 0.2s;
 }
 
-.navbar-brand-icon-main {
-  font-size: 1.75rem;
-  color: #10b981; /* green-600 */
+.navbar-brand:hover {
+  transform: scale(1.02);
 }
 
-.navbar-brand-text-main {
-  font-size: 1.25rem;
+.navbar-brand-icon {
+  font-size: 2rem;
+  color: #10b981;
+  transition: transform 0.3s ease;
+}
+
+.navbar-brand:hover .navbar-brand-icon {
+  animation: bounce 0.5s;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.navbar-brand-text {
+  font-size: 1.3rem;
   font-weight: 700;
-  color: #047857; /* green-700 */
+  color: #047857;
   text-decoration: none;
   transition: color 0.2s;
+  letter-spacing: -0.5px;
 }
 
-.navbar-brand-text-main:hover {
-  color: #065f46; /* green-800 */
+.navbar-brand-text:hover {
+  color: #065f46;
 }
 
-/* Navigation links */
-.navbar-links-main {
+/* Navigation Content */
+.navbar-content {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* Navigation Links */
+.navbar-links {
   display: flex;
   gap: 1.5rem;
   list-style: none;
@@ -329,95 +146,148 @@ body::before {
   padding: 0;
 }
 
-.navbar-item-main {
-  display: flex;
-  align-items: center;
+.navbar-item {
+  position: relative;
 }
 
-.navbar-link-main {
-  color: #374151; /* gray-700 */
+.navbar-link {
+  color: #374151;
   font-weight: 500;
   text-decoration: none;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.5rem 0.75rem;
-  border-radius: 0.375rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.navbar-link:hover {
+  color: #10b981;
+  background-color: #ecfdf5;
+  transform: translateY(-2px);
+}
+
+.navbar-link-icon {
+  font-size: 1.1rem;
+  transition: transform 0.2s;
+}
+
+.navbar-link:hover .navbar-link-icon {
+  transform: scale(1.1);
+}
+
+.navbar-link-text {
   transition: all 0.2s;
 }
 
-.navbar-link-main:hover {
-  color: #10b981; /* green-600 */
-  background-color: #ecfdf5; /* green-50 */
+/* Active Link Indicator */
+.navbar-item::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 3px;
+  background-color: #10b981;
+  transition: width 0.3s ease;
 }
 
-.navbar-link-icon-main {
-  font-size: 1rem;
+.navbar-item:hover::after {
+  width: 70%;
 }
 
-/* Auth section */
-.navbar-auth-main {
-  display: flex;
-  align-items: center;
-}
-
-.navbar-login-button-main {
-  background-color: #10b981; /* green-600 */
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 0.375rem;
-  font-weight: 500;
-  text-decoration: none;
-  transition: background-color 0.2s;
-}
-
-.navbar-login-button-main:hover {
-  background-color: #047857; /* green-700 */
-}
-
-.navbar-logout-button-main {
-  background-color: #fef2f2; /* red-50 */
-  color: #ef4444; /* red-600 */
-  padding: 0.5rem 1rem;
-  border-radius: 0.375rem;
+/* Logout Button */
+.logout-btn {
+  background-color: #fef2f2;
+  color: #ef4444;
+  padding: 0.5rem 1.25rem;
+  border-radius: 0.5rem;
   font-weight: 500;
   border: none;
   cursor: pointer;
   transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
-.navbar-logout-button-main:hover {
-  background-color: #fee2e2; /* red-100 */
-  color: #dc2626; /* red-700 */
+.logout-btn:hover {
+  background-color: #fee2e2;
+  color: #dc2626;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
-/* Responsive adjustments */
+/* Responsive Design */
 @media (max-width: 1024px) {
-  .navbar-main {
+  .navbar {
+    padding: 0.75rem 1.5rem;
+    height: auto;
     flex-direction: column;
     gap: 1rem;
-    padding: 1rem;
   }
 
-  .navbar-links-main {
-    flex-wrap: wrap;
-    justify-content: center;
+  .navbar-content {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .navbar-links {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0.75rem 1rem;
+  }
+
+  .navbar-brand-text {
+    font-size: 1.1rem;
+  }
+
+  .navbar-link {
+    padding: 0.5rem;
+  }
+
+  .navbar-link-text {
+    font-size: 0.9rem;
   }
 }
 
 @media (max-width: 640px) {
-  .navbar-links-main {
-    gap: 0.75rem;
+  .navbar-content {
+    flex-direction: column;
+    gap: 1rem;
   }
 
-  .navbar-link-main span {
+  .navbar-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .navbar-link-text {
     display: none;
   }
 
-  .navbar-link-icon-main {
-    font-size: 1.25rem;
+  .navbar-link-icon {
+    font-size: 1.3rem;
+  }
+
+  .logout-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 0.75rem;
   }
 }
+
+
+
+
+
 
 
 
@@ -3593,3 +3463,5 @@ body::before {
     font-size: 1.3rem;
   }
 }
+
+

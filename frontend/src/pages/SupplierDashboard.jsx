@@ -107,19 +107,35 @@ function SupplierDashboard() {
   });
   const [loading, setLoading] = useState(true);
 
+  // useEffect(() => {
+  //   const fetchDashboardData = async () => {
+  //     try {
+  //       const response = await api.get('supplier/dashboard');
+  //       setStats(response.data);
+  //     } catch (err) {
+  //       console.error('Error fetching dashboard data:', err);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchDashboardData();
+  // }, []);
+
   useEffect(() => {
-    const fetchDashboardData = async () => {
-      try {
-        const response = await api.get('supplier/dashboard');
-        setStats(response.data);
-      } catch (err) {
-        console.error('Error fetching dashboard data:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchDashboardData();
-  }, []);
+  const fetchDashboardData = async () => {
+    try {
+      const response = await api.get('supplier/dashboard');
+      setStats(response.data);
+      // console.log('Dashboard data:', response.data);
+    } catch (err) {
+      console.error('Error fetching dashboard data:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+  fetchDashboardData();
+}, []);
+
 
   const handleLogout = async () => {
     try {

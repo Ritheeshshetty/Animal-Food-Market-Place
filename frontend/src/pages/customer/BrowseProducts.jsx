@@ -36,22 +36,11 @@ export default function BrowseProducts() {
     return () => clearTimeout(debounceTimer);
   }, [search, category, animalType]);
 
-  // const handleLogout = async () => {
-  //   try {
-  //     await api.post("/auth/logout");
-  //     alert("Logged out successfully");
-  //     navigate("/login");
-  //   } catch (err) {
-  //     alert("Logout failed");
-  //   }
-  // };
 
   return (
     <div className="browse-products-main">
       <div className="browse-products-header-main">
-        {/* <button onClick={handleLogout} className="delete-btn">
-          Logout
-        </button> */}
+
         <h1 className="browse-products-title-main">Browse Animal Food</h1>
         <p className="browse-products-subtitle-main">
           Find the perfect nutrition for your animals

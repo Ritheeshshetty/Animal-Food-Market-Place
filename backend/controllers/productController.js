@@ -79,3 +79,29 @@ export const getProductById = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+
+
+
+export const getRecommendedProducts = async (req, res) => {
+  try {
+
+    const products = await Product.find()
+      .lean()
+      .exec();
+
+    products.forEach(product => {
+      product.avgRating = product.ratings.length
+        ? product.ratings.reduce((acc, r) => acc + r, 0) / product.ratings.length
+        : 0;
+    });
+
+    products.sort((a, b) => b.avgRating - a.avgRating);
+
+
+    res.json(products.slice(0, 10));
+  } catch (error) {
+    console.error('Failed to get recommended products:', error);
+    res.status(500).json({ message: 'Server error fetching recommended products' });
+  }
+};

@@ -1,57 +1,63 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { FiShoppingCart, FiTruck, FiShield, FiStar, FiPackage } from 'react-icons/fi';
-import { FaDog, FaCat, FaHorse, FaKiwiBird } from 'react-icons/fa';
-import { GiCow } from 'react-icons/gi';
-import './LandingPage.css';
+import React from "react";
+import { Link } from "react-router-dom";
+import {
+  FiShoppingCart,
+  FiTruck,
+  FiShield,
+  FiStar,
+  FiPackage,
+} from "react-icons/fi";
+import { FaDog, FaCat, FaHorse, FaKiwiBird } from "react-icons/fa";
+import { GiCow } from "react-icons/gi";
+import "./LandingPage.css";
 
 // Sample products data - replace with API call
 const featuredProducts = [
   {
     id: 1,
-    name: 'Premium Dog Food',
-    category: 'pet',
-    animalType: 'dog',
+    name: "Premium Dog Food",
+    category: "pet",
+    animalType: "dog",
     price: 24.99,
     rating: 4.5,
-    image: 'https://via.placeholder.com/300x200?text=Dog+Food'
+    image: "https://via.placeholder.com/300x200?text=Dog+Food",
   },
   {
     id: 2,
-    name: 'Organic Cat Treats',
-    category: 'pet',
-    animalType: 'cat',
+    name: "Organic Cat Treats",
+    category: "pet",
+    animalType: "cat",
     price: 12.99,
     rating: 4.2,
-    image: 'https://via.placeholder.com/300x200?text=Cat+Treats'
+    image: "https://via.placeholder.com/300x200?text=Cat+Treats",
   },
   {
     id: 3,
-    name: 'Poultry Feed',
-    category: 'livestock',
-    animalType: 'poultry',
-    price: 18.50,
+    name: "Poultry Feed",
+    category: "livestock",
+    animalType: "poultry",
+    price: 18.5,
     rating: 4.7,
-    image: 'https://via.placeholder.com/300x200?text=Poultry+Feed'
+    image: "https://via.placeholder.com/300x200?text=Poultry+Feed",
   },
   {
     id: 4,
-    name: 'Cattle Nutrition Mix',
-    category: 'livestock',
-    animalType: 'cattle',
+    name: "Cattle Nutrition Mix",
+    category: "livestock",
+    animalType: "cattle",
     price: 32.99,
     rating: 4.8,
-    image: 'https://via.placeholder.com/300x200?text=Cattle+Feed'
-  }
+    image: "https://via.placeholder.com/300x200?text=Cattle+Feed",
+  },
 ];
 
 const animalCategories = [
-  { icon: <FaDog />, name: 'Dogs', count: 42 },
-  { icon: <FaCat />, name: 'Cats', count: 35 },
-  { icon: <FaKiwiBird />, name: 'Birds', count: 28 },
-  { icon: <GiCow />, name: 'Cattle', count: 19 },
-  { icon: <FaHorse />, name: 'Horses', count: 15 },
-  { icon: <FaKiwiBird />, name: 'Poultry', count: 23 }
+  { icon: <FaDog />, name: "Dogs", count: 42 },
+  { icon: <FaCat />, name: "Cats", count: 35 },
+  { icon: <FaKiwiBird />, name: "Birds", count: 28 },
+  { icon: <GiCow />, name: "Cattle", count: 19 },
+  { icon: <FaHorse />, name: "Horses", count: 15 },
+  { icon: <FaKiwiBird />, name: "Poultry", count: 23 },
 ];
 
 function LandingPage() {
@@ -61,13 +67,15 @@ function LandingPage() {
       <section className="landing-hero-main">
         <div className="landing-hero-content-main">
           <h1 className="landing-hero-title-main">
-            Premium Nutrition for <span className="text-highlight-main">Your Animals</span>
+            Premium Nutrition for{" "}
+            <span className="text-highlight-main">Your Animals</span>
           </h1>
           <p className="landing-hero-subtitle-main">
-            The largest marketplace for pet and livestock food products with 1000+ happy customers
+            The largest marketplace for pet and livestock food products with
+            1000+ happy customers
           </p>
           <div className="landing-hero-buttons-main">
-            <Link to="/browse" className="landing-hero-button-primary-main">
+            <Link to="/login" className="landing-hero-button-primary-main">
               Browse Products
             </Link>
             <Link to="/signup" className="landing-hero-button-secondary-main">
@@ -76,7 +84,10 @@ function LandingPage() {
           </div>
         </div>
         <div className="landing-hero-image-main">
-          <img src="https://via.placeholder.com/600x400?text=Happy+Animals" alt="Happy animals" />
+          <img
+            src="https://via.placeholder.com/600x400?text=Happy+Animals"
+            alt="Happy animals"
+          />
         </div>
       </section>
 
@@ -85,16 +96,16 @@ function LandingPage() {
         <h2 className="landing-section-title-main">Shop by Animal Type</h2>
         <div className="landing-categories-grid-main">
           {animalCategories.map((category, index) => (
-            <Link 
-              to={`/browse?animalType=${name.toLowerCase()}`} 
-              key={index} 
+            <Link
+              to={`/browse?animalType=${name.toLowerCase()}`}
+              key={index}
               className="landing-category-card-main"
             >
-              <div className="landing-category-icon-main">
-                {category.icon}
-              </div>
+              <div className="landing-category-icon-main">{category.icon}</div>
               <h3 className="landing-category-name-main">{category.name}</h3>
-              <p className="landing-category-count-main">{category.count}+ Products</p>
+              <p className="landing-category-count-main">
+                {category.count}+ Products
+              </p>
             </Link>
           ))}
         </div>
@@ -109,27 +120,35 @@ function LandingPage() {
           </Link>
         </div>
         <div className="landing-products-grid-main">
-          {featuredProducts.map(product => (
+          {featuredProducts.map((product) => (
             <div key={product.id} className="landing-product-card-main">
               <div className="landing-product-image-main">
                 <img src={product.image} alt={product.name} />
-                <span className={`landing-product-category-main ${
-                  product.category === 'pet' ? 'landing-product-category-pet-main' : 'landing-product-category-livestock-main'
-                }`}>
+                <span
+                  className={`landing-product-category-main ${
+                    product.category === "pet"
+                      ? "landing-product-category-pet-main"
+                      : "landing-product-category-livestock-main"
+                  }`}
+                >
                   {product.category}
                 </span>
               </div>
               <div className="landing-product-content-main">
                 <h3 className="landing-product-name-main">{product.name}</h3>
-                <p className="landing-product-type-main">For {product.animalType}</p>
+                <p className="landing-product-type-main">
+                  For {product.animalType}
+                </p>
                 <div className="landing-product-rating-main">
                   <FiStar className="landing-product-rating-icon-main" />
                   <span>{product.rating}</span>
                 </div>
                 <div className="landing-product-footer-main">
-                  <span className="landing-product-price-main">₹{product.price.toFixed(2)}</span>
-                  <Link 
-                    to={`/product/${product.id}`} 
+                  <span className="landing-product-price-main">
+                    ₹{product.price.toFixed(2)}
+                  </span>
+                  <Link
+                    to={`/product/${product.id}`}
                     className="landing-product-button-main"
                   >
                     View Details
@@ -143,20 +162,24 @@ function LandingPage() {
 
       {/* Features Section */}
       <section className="landing-features-main">
-        <h2 className="landing-section-title-main">Why Choose Our Marketplace?</h2>
+        <h2 className="landing-section-title-main">
+          Why Choose Our Marketplace?
+        </h2>
         <div className="landing-features-grid-main">
           <div className="landing-feature-card-main">
             <FiShoppingCart className="landing-feature-icon-main" />
             <h3 className="landing-feature-title-main">Easy Shopping</h3>
             <p className="landing-feature-text-main">
-              Browse thousands of products with intuitive filters and search functionality.
+              Browse thousands of products with intuitive filters and search
+              functionality.
             </p>
           </div>
           <div className="landing-feature-card-main">
             <FiTruck className="landing-feature-icon-main" />
             <h3 className="landing-feature-title-main">Fast Delivery</h3>
             <p className="landing-feature-text-main">
-              Get your orders delivered quickly with our reliable logistics partners.
+              Get your orders delivered quickly with our reliable logistics
+              partners.
             </p>
           </div>
           <div className="landing-feature-card-main">
@@ -194,7 +217,8 @@ function LandingPage() {
           </div>
           <div className="landing-testimonial-card-main">
             <div className="landing-testimonial-content-main">
-              "As a livestock farmer, I appreciate the variety and competitive prices."
+              "As a livestock farmer, I appreciate the variety and competitive
+              prices."
             </div>
             <div className="landing-testimonial-author-main">
               <div className="landing-testimonial-avatar-main">PS</div>
@@ -211,7 +235,8 @@ function LandingPage() {
       <section className="landing-cta-main">
         <h2 className="landing-cta-title-main">Ready to Get Started?</h2>
         <p className="landing-cta-text-main">
-          Join thousands of happy customers and suppliers in our marketplace today.
+          Join thousands of happy customers and suppliers in our marketplace
+          today.
         </p>
         <div className="landing-cta-buttons-main">
           <Link to="/signup" className="landing-cta-button-primary-main">
@@ -252,7 +277,8 @@ function LandingPage() {
           </div>
         </div>
         <div className="landing-footer-copyright-main">
-          &copy; {new Date().getFullYear()} Animal Food Marketplace. All rights reserved.
+          &copy; {new Date().getFullYear()} Animal Food Marketplace. All rights
+          reserved.
         </div>
       </footer>
     </div>

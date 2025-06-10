@@ -152,6 +152,10 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import BrowseProducts from "./pages/customer/BrowseProducts.jsx";
 import LandingPage from "./pages/LandingPage.jsx";
+import ManageProductPage from "./pages/supplier/ManageProductPage .jsx";
+import SupplierProductPage from "./pages/supplier/SupplierProductPage.jsx";
+import ManageStockPage from "./pages/supplier/ManageStockPage.jsx";
+import MyOrders from "./pages/customer/MyOrders.jsx";
 
 // Layout wrapper for customer routes
 function CustomerLayout() {
@@ -214,6 +218,17 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/customer/orders"
+            element={
+              <ProtectedRoute allowedRoles={["customer"]}>
+                <>
+                  <CustomerNav />
+                  <MyOrders />
+                </>
+              </ProtectedRoute>
+            }
+          />
 
           {/* Supplier Routes */}
           <Route
@@ -245,6 +260,30 @@ export default function App() {
             element={
               <ProtectedRoute allowedRoles={["supplier"]}>
                 <SupplierOrdersPage />
+              </ProtectedRoute>
+            }
+          />
+           <Route
+            path="/supplier/products/"
+            element={
+              <ProtectedRoute allowedRoles={["supplier"]}>
+                <SupplierProductPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/supplier/products/:productId/edit"
+            element={
+              <ProtectedRoute allowedRoles={["supplier"]}>
+                <ManageProductPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/supplier/manage-stock/:productId/"
+            element={
+              <ProtectedRoute allowedRoles={["supplier"]}>
+                <ManageStockPage />
               </ProtectedRoute>
             }
           />
