@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
-import api from "../../api";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import api from "../../api";
 import { FiTrash2, FiEdit2, FiPlus, FiPackage, FiArrowLeft } from "react-icons/fi";
 import { FaDog, FaCat, FaDove, FaHorse } from "react-icons/fa";
 import { GiCow, GiGoat } from "react-icons/gi";
-import "./Supplier.css";
+import "./SupplierProducts.css";
 
-export default function SupplierProductPage() {
+const SupplierProductPage = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -24,10 +24,8 @@ export default function SupplierProductPage() {
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const res = await api.get("/supplier/products", {
-        withCredentials: true,
-      });
-      setProducts(res.data);
+      const res = await api.get("/supplier/products", { withCredentials: true });
+      setProducts(res.data.sort((a, b) => a.name.localeCompare(b.name)));
     } catch (err) {
       alert("Failed to fetch products");
     } finally {
@@ -35,12 +33,10 @@ export default function SupplierProductPage() {
     }
   };
 
-  const deleteProduct = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this product?"))
-      return;
+  const handleDeleteProduct = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this product?")) return;
     try {
       await api.delete(`/supplier/products/${id}`, { withCredentials: true });
-      alert("Product deleted!");
       fetchProducts();
     } catch (err) {
       alert("Failed to delete product");
@@ -55,18 +51,17 @@ export default function SupplierProductPage() {
     <div className="supplier-products-container">
       <div className="supplier-products-content">
         {/* Header Section */}
-        <div className="supplier-products-header">
-          <button
-            onClick={() => navigate(-1)}
-            className="manage-product-back-button-main"
-          >
-            <FiArrowLeft className="manage-product-back-icon-main" />
-            Back to Inventory
+        <header className="supplier-products-header">
+          <button onClick={() => navigate(-1)} className="back-button">
+            <FiArrowLeft className="btn-icon" />
+            Back
           </button>
-          <div className="header-text">
-            <h1>My Products</h1>
-            <p>Manage your product listings</p>
+
+          <div className="header-content">
+            <h1 className="page-title">My Products</h1>
+            {/* <p className="page-subtitle">Manage your product listings</p> */}
           </div>
+
           <button
             className="add-product-btn"
             onClick={() => navigate("/supplier/add-product")}
@@ -74,7 +69,7 @@ export default function SupplierProductPage() {
             <FiPlus className="btn-icon" />
             Add Product
           </button>
-        </div>
+        </header>
 
         {/* Loading State */}
         {loading && (
@@ -104,26 +99,32 @@ export default function SupplierProductPage() {
         {!loading && products.length > 0 && (
           <div className="products-grid">
             {products.map((product) => (
-              <div className="product-card" key={product._id}>
+              <article className="product-card" key={product._id}>
+                {/* Product Image */}
+                {product.image && (
+                  <div className="product-image-container">
+                    <img
+                      src={`http://localhost:5000${product.image}`}
+                      alt={product.name}
+                      className="product-image"
+                    />
+                  </div>
+                )}
+
                 {/* Product Header */}
                 <div className="product-header">
                   <div className="header-content">
                     <h3 className="product-name">{product.name}</h3>
-                    <span
-                      className={`category-badge ${
-                        product.category === "pet"
-                          ? "pet-badge"
-                          : "livestock-badge"
-                      }`}
-                    >
-                      {product.category === "pet"
-                        ? "Pet Food"
-                        : "Livestock Feed"}
+                    <span className={`category-badge ${
+                      product.category === "pet" 
+                        ? "pet-badge" 
+                        : "livestock-badge"
+                    }`}>
+                      {product.category === "pet" ? "Pet Food" : "Livestock Feed"}
                     </span>
                   </div>
-
                   <div className="animal-type">
-                    {animalIcons[product.animalType]}
+                    {/* {animalIcons[product.animalType]} */}
                     <span>{product.animalType}</span>
                   </div>
                 </div>
@@ -140,7 +141,7 @@ export default function SupplierProductPage() {
                 <div className="product-section">
                   <h4 className="section-title">Ingredients</h4>
                   <div className="ingredients-list">
-                    {product.ingredients?.length > 0 ? (
+                    {Array.isArray(product.ingredients) && product.ingredients.length > 0 ? (
                       product.ingredients.map((ingredient, index) => (
                         <span key={index} className="ingredient-tag">
                           {ingredient}
@@ -159,23 +160,18 @@ export default function SupplierProductPage() {
                   <h4 className="section-title">Available Options</h4>
                   <div className="quantity-options">
                     {product.quantityOptions?.map((option) => (
-                      <div
-                        key={option._id || option.label}
-                        className="quantity-option"
-                      >
+                      <div key={option._id || option.label} className="quantity-option">
                         <span className="option-label">{option.label}</span>
                         <div className="option-details">
                           <span className="option-price">₹{option.price}</span>
-                          <span
-                            className={`option-stock ${
-                              option.stock > 10
-                                ? "high-stock"
-                                : option.stock > 0
-                                ? "low-stock"
+                          <span className={`option-stock ${
+                            option.stock > 10 
+                              ? "high-stock" 
+                              : option.stock > 0 
+                                ? "low-stock" 
                                 : "no-stock"
-                            }`}
-                          >
-                            {option.stock} in stock
+                          }`}>
+                            {option.stock > 0 ? `${option.stock} in stock` : "Out of stock"}
                           </span>
                         </div>
                       </div>
@@ -183,30 +179,28 @@ export default function SupplierProductPage() {
                   </div>
                 </div>
 
-                {/* Actions */}
+                {/* Action Buttons */}
                 <div className="product-actions">
                   <button
                     className="edit-btn"
-                    onClick={() =>
-                      navigate(`/supplier/products/${product._id}/edit`)
-                    }
+                    onClick={() => navigate(`/supplier/products/${product._id}/edit`)}
                   >
-                    <FiEdit2 className="btn-icon" />
-                    Edit
+                    <FiEdit2 className="btn-icon" /> Edit
                   </button>
                   <button
                     className="delete-btn"
-                    onClick={() => deleteProduct(product._id)}
+                    onClick={() => handleDeleteProduct(product._id)}
                   >
-                    <FiTrash2 className="btn-icon" />
-                    Delete
+                    <FiTrash2 className="btn-icon" /> Delete
                   </button>
                 </div>
-              </div>
+              </article>
             ))}
           </div>
         )}
       </div>
     </div>
   );
-}
+};
+
+export default SupplierProductPage;

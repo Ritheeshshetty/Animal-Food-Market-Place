@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import api from '../../api';
 import AdminNav from '../../components/AdminNav';
-import { FiTrash2, FiEdit2, FiPlus } from 'react-icons/fi';
+import { FiTrash2, FiEdit2, FiPlus, FiPackage } from 'react-icons/fi';
 import { FaDog, FaCat, FaDove, FaHorse } from 'react-icons/fa';
-import { GiCow,GiGoat} from 'react-icons/gi';
+import { GiCow, GiGoat } from 'react-icons/gi';
 
 export default function Products() {
   const [products, setProducts] = useState([]);
@@ -69,6 +69,17 @@ export default function Products() {
           <div className="products-grid">
             {products.map(product => (
               <div className="product-card" key={product._id}>
+                {/* Product Image */}
+                {product.image && (
+                  <div className="product-image-container">
+                    <img
+                      src={`http://localhost:5000${product.image}`}
+                      alt={product.name}
+                      className="product-image"
+                    />
+                  </div>
+                )}
+
                 <div className="product-header">
                   <h3 className="product-name">{product.name}</h3>
                   <div className="product-category-badge">
@@ -78,7 +89,7 @@ export default function Products() {
 
                 <div className="product-meta">
                   <div className="animal-type">
-                    {animalIcons[product.animalType]}
+                    {/* {animalIcons[product.animalType]} */}
                     <span>{product.animalType}</span>
                   </div>
                 </div>

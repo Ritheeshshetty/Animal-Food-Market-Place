@@ -12,6 +12,8 @@ import {
 } from "../controllers/supplierController.js";
 import authMiddleware from "../middlewares/authMiddleware.js";
 import roleMiddleware from "../middlewares/roleMiddleware.js";
+import upload from "../middlewares/uploadMiddleware.js";
+
 
 const router = express.Router();
 
@@ -45,12 +47,21 @@ router.get(
   roleMiddleware("supplier"),
   getSupplierProduct
 );
+// router.patch(
+//   "/products/:productId/edit",
+//   authMiddleware,
+//   roleMiddleware("supplier"),
+//   updateSupplierProduct
+// );
 router.patch(
   "/products/:productId/edit",
   authMiddleware,
   roleMiddleware("supplier"),
+  upload.single("image"), // <-- This enables image uploading
   updateSupplierProduct
 );
+
+
 router.delete(
   "/products/:id",
   authMiddleware,

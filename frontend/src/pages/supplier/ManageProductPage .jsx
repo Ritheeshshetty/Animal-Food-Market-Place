@@ -6,7 +6,7 @@ import { FaDog, FaCat, FaDove, FaKiwiBird } from "react-icons/fa";
 import { GiCow, GiGoat } from "react-icons/gi";
 import "./ManageProductPage.css";
 
-function ManageProductPage() {
+export default function ManageProductPage() {
   const navigate = useNavigate();
   const { productId } = useParams();
   const [form, setForm] = useState({
@@ -15,7 +15,10 @@ function ManageProductPage() {
     animalType: "dog",
     nutritionalInfo: "",
     ingredients: "",
+    image: "",
   });
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -30,17 +33,11 @@ function ManageProductPage() {
 
   useEffect(() => {
     async function fetchProduct() {
-      setLoading(true);
-      setError("");
       try {
-        const res = await api.get(`supplier/products/${productId}/edit`, {
+        const res = await api.get(`/supplier/products/${productId}/edit`, {
           withCredentials: true,
         });
         const prod = res.data;
-     
-        console.log(prod.ingredients); 
-
-      
         setForm({
           name: prod.name || "",
           category: prod.category || "pet",
@@ -51,11 +48,14 @@ function ManageProductPage() {
             : typeof prod.ingredients === "string"
             ? prod.ingredients
             : "",
+          image: prod.image || "",
         });
+        setImagePreview(prod.image ? `http://localhost:5000${prod.image}` : "");
       } catch (err) {
-        setError(err.response?.data?.error || "Failed to load product data");
+        setError(err.response?.data?.message || "Failed to load product data");
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     }
     fetchProduct();
   }, [productId]);
@@ -64,26 +64,41 @@ function ManageProductPage() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedFile(file);
+    setImagePreview(URL.createObjectURL(file));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    try {
-      const payload = {
-        ...form,
-        ingredients: form.ingredients.split(",").map((i) => i.trim()),
-      };
 
-      await api.patch(`supplier/products/${productId}/edit`, payload, {
+    try {
+      const formData = new FormData();
+      formData.append("name", form.name);
+      formData.append("category", form.category);
+      formData.append("animalType", form.animalType);
+      formData.append("nutritionalInfo", form.nutritionalInfo);
+      formData.append("ingredients", form.ingredients); // backend handles splitting
+
+      if (selectedFile) {
+        formData.append("image", selectedFile);
+      }
+
+      await api.patch(`/supplier/products/${productId}/edit`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
         withCredentials: true,
       });
+
       alert("Product updated successfully");
-      navigate("/supplier/inventory");
+      navigate("/supplier/products");
     } catch (err) {
       setError(err.response?.data?.error || "Failed to update product");
     }
   };
 
-  if (loading)
+  if (loading) {
     return (
       <div className="manage-product-loading-main">
         <div className="manage-product-loading-spinner-main">
@@ -91,6 +106,7 @@ function ManageProductPage() {
         </div>
       </div>
     );
+  }
 
   return (
     <div className="manage-product-container-main">
@@ -111,6 +127,22 @@ function ManageProductPage() {
       {error && <div className="manage-product-error-main">{error}</div>}
 
       <form onSubmit={handleSubmit} className="manage-product-form-main">
+        {/* Image Upload */}
+        <div className="manage-product-form-group-main">
+          <label className="manage-product-form-label-main">
+            Product Image
+          </label>
+          <input type="file" accept="image/*" onChange={handleFileChange} />
+          {imagePreview && (
+            <img
+              src={imagePreview}
+              alt="Preview"
+              className="manage-product-image-preview-main"
+            />
+          )}
+        </div>
+
+        {/* Product Details */}
         <div className="manage-product-form-group-main">
           <label className="manage-product-form-label-main">Product Name</label>
           <input
@@ -201,5 +233,3 @@ function ManageProductPage() {
     </div>
   );
 }
-
-export default ManageProductPage;
