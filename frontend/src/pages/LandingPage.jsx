@@ -10,6 +10,7 @@ import {
 import { FaDog, FaCat, FaHorse, FaKiwiBird } from "react-icons/fa";
 import { GiCow } from "react-icons/gi";
 import "./LandingPage.css";
+import front2 from '../assets/front2.png';
 
 // Sample products data - replace with API call
 const featuredProducts = [
@@ -85,7 +86,7 @@ function LandingPage() {
         </div>
         <div className="landing-hero-image-main">
           <img
-            src="https://via.placeholder.com/600x400?text=Happy+Animals"
+            src={front2}
             alt="Happy animals"
           />
         </div>

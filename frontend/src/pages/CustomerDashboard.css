@@ -219,3 +219,27 @@
     grid-template-columns: 1fr;
   }
 }
+
+.product-image-container {
+  width: 100%;
+  height: 150px;
+  background: #f8f8f8;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: transform 0.2s;
+}
+
+.product-image:hover {
+  transform: scale(1.04);
+}

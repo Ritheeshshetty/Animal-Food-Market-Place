@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FiShoppingCart, FiStar, FiInfo, FiPackage, FiTag, FiArrowLeft } from 'react-icons/fi';
 import api from '../../api';
-import { toast } from 'react-toastify'; 
+import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { addOrUpdateCartItem } from '../../redux/slices/cartSlice';
 
 export default function ProductDetails() {
   const { id } = useParams();
@@ -12,6 +14,8 @@ export default function ProductDetails() {
   const [error, setError] = useState(null);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -34,41 +38,25 @@ export default function ProductDetails() {
     setSelectedOption(option);
   };
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
     if (!selectedOption || selectedOption.stock <= 0) {
-      alert("This product is out of stock.");
+      toast.error("This product is out of stock.");
       return;
     }
 
-    const cartItem = {
-      productId: product._id,
-      name: product.name,
-      quantityLabel: selectedOption.label,
-      price: selectedOption.price,
-      quantity: 1,
-      availableStock: selectedOption.stock,
-    };
+    try {
+      // Dispatch Redux thunk to add to cart in DB
+      await dispatch(addOrUpdateCartItem({
+        product: product._id,
+        quantityLabel: selectedOption.label,
+        quantity: 1
+      })).unwrap();
 
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const existingItemIndex = cart.findIndex(
-      item => item.productId === product._id && item.quantityLabel === selectedOption.label
-    );
-
-    if (existingItemIndex >= 0) {
-      if (cart[existingItemIndex].quantity < selectedOption.stock) {
-        cart[existingItemIndex].quantity += 1;
-      } else {
-        alert(`Only ${selectedOption.stock} in stock!`);
-        return;
-      }
-    } else {
-      cart.push(cartItem);
+      toast.success(`${product.name} (${selectedOption.label}) added to cart!`);
+      navigate("/cart");
+    } catch (err) {
+      toast.error(err || "Failed to add to cart.");
     }
-
-    localStorage.setItem('cart', JSON.stringify(cart));
-    toast.success(`${product.name} (${selectedOption.label}) added to cart!`);
-    navigate("/cart")
-    // alert(`${product.name} (${selectedOption.label}) added to cart!`);
   };
 
   if (loading) return (
@@ -97,9 +85,9 @@ export default function ProductDetails() {
 
   return (
     <div className="product-details-container-main">
-       <button className="back-button" onClick={() => navigate(-1)}>
-                <FiArrowLeft /> Back
-              </button>
+      <button className="back-button" onClick={() => navigate(-1)}>
+        <FiArrowLeft /> Back
+      </button>
       <div className="product-details-header-main">
         <h1 className="product-details-title-main">{product.name}</h1>
         <div className="product-details-meta-main">

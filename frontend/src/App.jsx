@@ -156,6 +156,7 @@ import ManageProductPage from "./pages/supplier/ManageProductPage .jsx";
 import SupplierProductPage from "./pages/supplier/SupplierProductPage.jsx";
 import ManageStockPage from "./pages/supplier/ManageStockPage.jsx";
 import MyOrders from "./pages/customer/MyOrders.jsx";
+import PaymentPage from "./pages/customer/PaymentPage.jsx";
 
 // Layout wrapper for customer routes
 function CustomerLayout() {
@@ -225,6 +226,17 @@ export default function App() {
                 <>
                   <CustomerNav />
                   <MyOrders />
+                </>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/payment"
+            element={
+              <ProtectedRoute allowedRoles={["customer"]}>
+                <>
+                  <CustomerNav />
+                  <PaymentPage/>
                 </>
               </ProtectedRoute>
             }

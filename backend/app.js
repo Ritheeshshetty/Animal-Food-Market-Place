@@ -10,6 +10,7 @@ import supplierRoutes from "./routes/supplierRoutes.js";
 import cookieParser from "cookie-parser";
 import path from "path";
 import { fileURLToPath } from "url";
+import cartRoutes from "./routes/cartRoutes.js";
 
 dotenv.config();
 
@@ -36,5 +37,7 @@ app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/supplier", supplierRoutes);
+app.use('/api/cart', cartRoutes);
+
 
 export default app;

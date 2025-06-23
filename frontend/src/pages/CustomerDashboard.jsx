@@ -8,9 +8,8 @@ import {
 } from "react-icons/fi";
 import "./CustomerDashboard.css";
 import api from "../api";
-function CustomerDashboard() {
-  // Sample data - replace with actual API calls
 
+function CustomerDashboard() {
   const [recommendedProducts, setRecommendedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -47,6 +46,14 @@ function CustomerDashboard() {
     fetchRecommended();
   }, []);
 
+  // Helper to get correct image URL
+  const getImageUrl = (image) => {
+    if (!image) return "/default-product-image.png";
+    if (image.startsWith("http")) return image;
+    if (image.startsWith("/")) return `http://localhost:5000${image}`;
+    return `http://localhost:5000/uploads/${image}`;
+  };
+
   return (
     <div className="dashboard-container">
       {/* Header Section */}
@@ -68,7 +75,6 @@ function CustomerDashboard() {
       </section>
 
       {/* Recommended Products */}
-      {/* Recommended Products */}
       <section className="recommended-section">
         <h2 className="section-title">
           <FiStar className="section-icon" />
@@ -81,6 +87,19 @@ function CustomerDashboard() {
           <div className="products-grid">
             {recommendedProducts.map((product) => (
               <div key={product._id} className="product-card">
+                <div className="product-image-container">
+                  <img
+                    src={getImageUrl(product.image)}
+                    alt={product.name}
+                    className="product-image"
+                    style={{
+                      width: "100%",
+                      height: "150px",
+                      objectFit: "cover",
+                      borderRadius: "8px",
+                    }}
+                  />
+                </div>
                 <div className="product-badge">
                   <span
                     className={`badge ${
@@ -99,13 +118,13 @@ function CustomerDashboard() {
                     ).toFixed(1)}
                   </span>
                 </div>
-
                 <h3 className="product-name">{product.name}</h3>
                 <p className="product-type">For {product.animalType}</p>
-
                 <div className="product-footer">
                   <span className="product-price">
-                    ₹{product.quantityOptions[0]?.price?.toFixed(2) || "N/A"}
+                    ₹
+                    {product.quantityOptions[0]?.price?.toFixed(2) ||
+                      "N/A"}
                   </span>
                   <Link to={`/product/${product._id}`} className="view-button">
                     View Details

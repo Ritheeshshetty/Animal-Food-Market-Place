@@ -15,6 +15,16 @@ const userSchema = new mongoose.Schema({
       return this.role === 'supplier' ? false : true;
     },
   },
+  // Add cart field
+  cart: [{
+    product: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Product'
+    },
+    quantityLabel: String,
+    quantity: Number,
+    price: Number
+  }]
 }, { timestamps: true });
 
 export default mongoose.model('User', userSchema);
