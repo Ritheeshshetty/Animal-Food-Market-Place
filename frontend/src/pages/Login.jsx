@@ -71,7 +71,7 @@ export default function Login() {
         <h1>Animal Food Marketplace</h1>
         <h2>Welcome Back!</h2>
 
-        <div className="input-group">
+        <div className="input-group login">
           <span className="input-icon">✉️</span>
           <input
             type="email"

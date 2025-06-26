@@ -105,3 +105,54 @@ export const getRecommendedProducts = async (req, res) => {
     res.status(500).json({ message: 'Server error fetching recommended products' });
   }
 };
+
+
+export const getFeaturedProducts = async (req, res) => {
+  try {
+    // Top selling products (based on salesCount)
+    const topSelling = await Product.find()
+      .sort({ salesCount: -1 })
+      .limit(4)
+      .lean();
+
+    // Top rated products (based on average rating)
+    const topRated = await Product.aggregate([
+      {
+        $addFields: {
+          avgRating: {
+            $cond: {
+              if: { $gt: [{ $size: "$ratings" }, 0] },
+              then: { $avg: "$ratings" },
+              else: 0
+            }
+          }
+        }
+      },
+      { $sort: { avgRating: -1 } },
+      { $limit: 4 }
+    ]);
+
+    // Function to split products by quantity options
+    const splitProductsByOptions = (products) => {
+      return products.flatMap(product => {
+        if (!product.quantityOptions || product.quantityOptions.length === 0) {
+          return [{ ...product, isOption: false }];
+        }
+        
+        return product.quantityOptions.map(option => ({
+          ...product,
+          _id: `${product._id}-${option.label}`, // Unique ID for each option
+          quantityOption: option,
+          isOption: true
+        }));
+      });
+    };
+
+    res.json({
+      topSelling: splitProductsByOptions(topSelling),
+      topRated: splitProductsByOptions(topRated)
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

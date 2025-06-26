@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FiSearch, FiFilter, FiArrowLeft } from "react-icons/fi";
+import { FiSearch, FiFilter } from "react-icons/fi";
 import api from "../../api";
 import { useNavigate } from "react-router-dom";
 
@@ -36,111 +36,124 @@ export default function BrowseProducts() {
     return () => clearTimeout(debounceTimer);
   }, [search, category, animalType]);
 
+  const getImageUrl = (image) => {
+    if (!image) return "/default-product-image.png";
+    if (image.startsWith("http")) return image;
+    if (image.startsWith("/")) return `http://localhost:5000${image}`;
+    return `http://localhost:5000/uploads/${image}`;
+  };
 
   return (
-    <div className="browse-products-main">
-      <div className="browse-products-header-main">
-
-        <h1 className="browse-products-title-main">Browse Animal Food</h1>
-        <p className="browse-products-subtitle-main">
-          Find the perfect nutrition for your animals
+    <div className="browse-container">
+      {/* Header Section */}
+      <header className="browse-header">
+        <h1 className="browse-title">Premium Animal Nutrition</h1>
+        <p className="browse-subtitle">
+          Discover the perfect food for your companion's health and happiness
         </p>
-      </div>
+      </header>
 
-      <div className="browse-products-filters-main">
-        <div className="browse-products-search-main">
-          <FiSearch className="browse-products-search-icon-main" />
+      {/* Search and Filters Section */}
+      <section className="filters-section">
+        <div className="search-container">
+          <FiSearch className="search-icon" />
           <input
             type="text"
-            placeholder="Search products..."
+            placeholder="Search for food, treats, or supplements..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="browse-products-search-input-main"
+            className="search-input"
           />
         </div>
 
-        <div className="browse-products-select-group-main">
-          <div className="browse-products-select-wrapper-main">
-            <FiFilter className="browse-products-filter-icon-main" />
+        <div className="filter-group">
+          <div className="filter-wrapper">
+            <FiFilter className="filter-icon" />
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="browse-products-select-main"
+              className="filter-select"
             >
               <option value="">All Categories</option>
-              <option value="pet">Pet</option>
-              <option value="livestock">Livestock</option>
+              <option value="pet">Pet Food</option>
+              <option value="livestock">Livestock Feed</option>
             </select>
           </div>
 
-          <div className="browse-products-select-wrapper-main">
-            <FiFilter className="browse-products-filter-icon-main" />
+          <div className="filter-wrapper">
+            <FiFilter className="filter-icon" />
             <select
               value={animalType}
               onChange={(e) => setAnimalType(e.target.value)}
-              className="browse-products-select-main"
+              className="filter-select"
             >
               <option value="">All Animals</option>
-              <option value="dog">Dog</option>
-              <option value="cat">Cat</option>
-              <option value="bird">Bird</option>
-              <option value="cow">Cow</option>
-              <option value="goat">Goat</option>
+              <option value="dog">Dogs</option>
+              <option value="cat">Cats</option>
+              <option value="bird">Birds</option>
+              <option value="cow">Cattle</option>
+              <option value="goat">Goats</option>
               <option value="poultry">Poultry</option>
             </select>
           </div>
         </div>
-      </div>
+      </section>
 
+      {/* Products Grid */}
       {loading ? (
-        <div className="browse-products-loading-main">
-          <div className="browse-products-loading-spinner-main">
-            Loading products...
-          </div>
+        <div className="loading-container">
+          <div className="loading-spinner"></div>
+          <p>Finding the best nutrition for your animals...</p>
         </div>
       ) : (
-        <div className="browse-products-grid-main">
+        <div className="products-grid">
           {products.length > 0 ? (
             products.map((product) => (
-              <div key={product._id} className="browse-products-card-main">
-                <div className="browse-products-card-content-main">
-                  <div className="browse-products-card-header-main">
-                    <h3 className="browse-products-card-title-main">
-                      {product.name}
-                    </h3>
-                    <span
-                      className={`browse-products-card-category-main ${
-                        product.category === "pet"
-                          ? "browse-products-card-category-pet-main"
-                          : "browse-products-card-category-livestock-main"
-                      }`}
-                    >
-                      {product.category}
-                    </span>
-                  </div>
-                  <p className="browse-products-card-animal-main">
-                    {product.animalType}
+              <article key={product._id} className="product-card">
+                <div className="product-image-container">
+                  <img
+                    src={getImageUrl(product.image)}
+                    alt={product.name}
+                    loading="lazy"
+                    className="product-image"
+                  />
+                  <span className={`product-category ${product.category}`}>
+                    {product.category}
+                  </span>
+                </div>
+                <div className="product-details">
+                  <h3 className="product-name">{product.name}</h3>
+                  <p className="product-animal-type">
+                    For {product.animalType.charAt(0).toUpperCase() + product.animalType.slice(1)}
                   </p>
-                  <p className="browse-products-card-price-main">
+                  <div className="product-price">
                     {product.quantityOptions[0]?.label}: ₹
-                    {product.quantityOptions[0]?.price}
-                  </p>
+                    {product.quantityOptions[0]?.price.toFixed(2)}
+                  </div>
                   <button
-                    className="browse-products-card-button-main"
-                    onClick={() =>
-                      (window.location.href = `/product/${product._id}`)
-                    }
+                    className="view-button"
+                    onClick={() => navigate(`/product/${product._id}`)}
                   >
                     View Details
                   </button>
                 </div>
-              </div>
+              </article>
             ))
           ) : (
-            <div className="browse-products-empty-main">
-              <p className="browse-products-empty-text-main">
-                No products found matching your criteria.
-              </p>
+            <div className="empty-state">
+              <div className="empty-icon">🐾</div>
+              <h3>No products found</h3>
+              <p>Try adjusting your search or filters</p>
+              <button 
+                className="reset-button"
+                onClick={() => {
+                  setSearch("");
+                  setCategory("");
+                  setAnimalType("");
+                }}
+              >
+                Reset Filters
+              </button>
             </div>
           )}
         </div>

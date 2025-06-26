@@ -209,13 +209,7 @@ export default function CartScreen() {
                 </span>
               </div>
 
-              {/* <button
-                className="cart-checkout-button-main"
-                onClick={() => navigate("/checkout")}
-              >
-                Proceed to Checkout
-                <FiArrowRight className="cart-checkout-icon-main" />
-              </button> */}
+              
               <button
                 className="cart-checkout-button-main"
                 onClick={() => navigate("/payment")}

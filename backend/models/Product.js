@@ -35,6 +35,7 @@ const productSchema = new mongoose.Schema(
       type: String, // Store image URL or filename
       default: "", // Optional default value
     },
+     salesCount: { type: Number, default: 0 },
   },
   { timestamps: true }
 );
