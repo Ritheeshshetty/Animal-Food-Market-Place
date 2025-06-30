@@ -71,19 +71,7 @@ function CustomerDashboard() {
     );
   };
 
-  // const toggleCartExpand = (productId) => {
-  //   setRecommendedProducts((prev) =>
-  //     prev.map((p) =>
-  //       p._id === productId
-  //         ? {
-  //             ...p,
-  //             expanded: true,
-  //             cartQuantity: p.cartQuantity === 0 ? 1 : p.cartQuantity,
-  //           }
-  //         : p
-  //     )
-  //   );
-  // };
+
   const toggleCartExpand = async (productId) => {
     const product = recommendedProducts.find((p) => p._id === productId);
     const quantityLabel = product.selectedOption.label;
@@ -159,7 +147,7 @@ function CustomerDashboard() {
   return (
     <div className="dashboard-container">
       {/* Header */}
-      <header className="dashboard-header">
+      {/* <header className="dashboard-header">
         <div className="header-background">
           <div className="header-overlay">
             <div className="header-content">
@@ -190,7 +178,42 @@ function CustomerDashboard() {
             </div>
           </div>
         </div>
-      </header>
+        
+      </header> */}
+       <header className="dashboard-header">
+      <div className="header-background">
+        <div className="header-overlay">
+          <div className="header-content">
+            <div className="header-text">
+              <h1 className="welcome-title">Welcome to <span className="brand-name">Paws & Graze</span></h1>
+              <p className="welcome-subtitle">
+                Premium nutrition for your beloved pets and livestock. 
+                Fresh, organic, and delivered to your doorstep.
+              </p>
+              <div className="header-cta">
+                <Link to="/browse" className="cta-primary">
+                  Shop Now
+                </Link>
+                <Link to="/offers" className="cta-secondary">
+                  View Special Offers
+                </Link>
+              </div>
+            </div>
+            <div className="header-image">
+              <img 
+                src={dog}
+                alt="Happy golden retriever with healthy food" 
+                className="hero-image"
+                loading="eager"
+              />
+              <div className="image-badge">
+                <span className="badge-text">100% Organic Ingredients</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
 
       {/* Recommendations */}
       <section className="recommended-section">
@@ -339,15 +362,7 @@ function CustomerDashboard() {
                         </button>
                       </div>
                     ) : (
-                      // <button
-                      //   className={`cart-icon-button ${product.cartQuantity > 0 ? "in-cart" : ""}`}
-                      //   onClick={() => toggleCartExpand(product._id)}
-                      // >
-                      //   <FiShoppingCart />
-                      //   {product.cartQuantity > 0 && (
-                      //     <span className="cart-count-bubble">{product.cartQuantity}</span>
-                      //   )}
-                      // </button>
+                    
                       <button
                         className={`cart-icon-button ${
                           product.cartQuantity > 0 ? "in-cart" : ""

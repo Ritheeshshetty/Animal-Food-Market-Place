@@ -1,3 +1,5 @@
+// --- UPDATED REDUX SLICE ---
+
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -32,9 +34,11 @@ export const addOrUpdateCartItem = createAsyncThunk(
 
 export const removeCartItem = createAsyncThunk(
   "cart/removeCartItem",
-  async (productId, thunkAPI) => {
+  async ({ product, quantityLabel }, thunkAPI) => {
     try {
-      const res = await axios.delete(`/api/cart/${productId}`, { withCredentials: true });
+      const res = await axios.delete(`/api/cart/${product}?quantityLabel=${encodeURIComponent(quantityLabel)}`, {
+        withCredentials: true,
+      });
       return res.data;
     } catch (err) {
       return thunkAPI.rejectWithValue(
@@ -49,7 +53,6 @@ export const clearCart = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const res = await axios.delete("/api/cart/", { withCredentials: true });
-      // Return empty array as cart is cleared
       return [];
     } catch (err) {
       return thunkAPI.rejectWithValue(
@@ -60,7 +63,7 @@ export const clearCart = createAsyncThunk(
 );
 
 const initialState = {
-  items: [], // Always an array
+  items: [],
   loading: false,
   error: null,
 };
@@ -71,7 +74,6 @@ const cartSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // Fetch Cart
       .addCase(fetchCart.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -84,8 +86,6 @@ const cartSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-
-      // Add or Update Cart Item
       .addCase(addOrUpdateCartItem.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -98,15 +98,12 @@ const cartSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-
-      // Remove Cart Item
       .addCase(removeCartItem.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(removeCartItem.fulfilled, (state, action) => {
         state.loading = false;
-        // If backend returns cart array, use it, else fallback to []
         if (Array.isArray(action.payload)) {
           state.items = action.payload;
         } else if (action.payload && Array.isArray(action.payload.cart)) {
@@ -119,13 +116,11 @@ const cartSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-
-      // Clear Cart
       .addCase(clearCart.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(clearCart.fulfilled, (state, action) => {
+      .addCase(clearCart.fulfilled, (state) => {
         state.loading = false;
         state.items = [];
       })

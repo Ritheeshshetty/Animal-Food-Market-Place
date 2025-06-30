@@ -157,6 +157,11 @@ import SupplierProductPage from "./pages/supplier/SupplierProductPage.jsx";
 import ManageStockPage from "./pages/supplier/ManageStockPage.jsx";
 import MyOrders from "./pages/customer/MyOrders.jsx";
 import PaymentPage from "./pages/customer/PaymentPage.jsx";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import PaymentSuccess from "./pages/customer/PaymentSuccess.jsx";
+// Replace with your actual publishable key
+const stripePromise = loadStripe("pk_test_51RIB6zQRjsbxdshsU28v5y1LMUOZeXBgdUgf2ErC3qjRuKh42fShu6n62l0Ji2CZctTDLCPZryfmqHBmM1wiKk8S00pjKgSEEm");
 
 // Layout wrapper for customer routes
 function CustomerLayout() {
@@ -236,7 +241,22 @@ export default function App() {
               <ProtectedRoute allowedRoles={["customer"]}>
                 <>
                   <CustomerNav />
-                  <PaymentPage/>
+                  <Elements stripe={stripePromise}>
+                    <PaymentPage />
+                  </Elements>
+                  {/* <PaymentPage/> */}
+                </>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/payment-success"
+            element={
+              <ProtectedRoute allowedRoles={["customer"]}>
+                <>
+                  <CustomerNav />
+                  <PaymentSuccess />
+              
                 </>
               </ProtectedRoute>
             }

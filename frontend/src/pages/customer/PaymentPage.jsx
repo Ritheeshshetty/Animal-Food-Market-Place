@@ -1,27 +1,48 @@
 import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import CheckoutForm from "./CheckoutForm"; // You'll create this component (see below)
+
+const stripePromise = loadStripe("pk_test_51RIB6zQRjsbxdshsU28v5y1LMUOZeXBgdUgf2ErC3qjRuKh42fShu6n62l0Ji2CZctTDLCPZryfmqHBmM1wiKk8S00pjKgSEEm"); // Use your publishable key
 
 export default function PaymentPage() {
   const { items: cartItems } = useSelector((state) => state.cart);
+  const [clientSecret, setClientSecret] = useState("");
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!cartItems || cartItems.length === 0) {
       navigate("/cart");
+      return;
     }
+    const total = cartItems.reduce(
+      (sum, item) => sum + (Number(item.price) || 0) * (Number(item.quantity) || 0),
+      0
+    );
+    // Fetch the PaymentIntent clientSecret from your backend
+    fetch("http://localhost:5000/api/payment/create-payment-intent", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ amount: total }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setClientSecret(data.clientSecret);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
   }, [cartItems, navigate]);
 
-  const total = cartItems.reduce(
-    (sum, item) => sum + (Number(item.price) || 0) * (Number(item.quantity) || 0),
-    0
-  );
+  if (loading) return <div>Loading payment...</div>;
+  if (!clientSecret) return <div>Unable to initiate payment.</div>;
 
   return (
     <div className="payment-page">
       <div className="payment-container">
         <h1 className="payment-title">Payment Summary</h1>
-        
         <div className="payment-items">
           {cartItems.map((item) => (
             <div className="payment-item" key={`${item.product._id}-${item.quantityLabel}`}>
@@ -31,17 +52,18 @@ export default function PaymentPage() {
             </div>
           ))}
         </div>
-        
         <div className="payment-total">
-          <strong>Total: ₹{total.toFixed(2)}</strong>
+          <strong>
+            Total: ₹
+            {cartItems.reduce(
+              (sum, item) => sum + (Number(item.price) || 0) * (Number(item.quantity) || 0),
+              0
+            ).toFixed(2)}
+          </strong>
         </div>
-        
-        <button 
-          className="payment-button"
-          onClick={() => alert("Integrate payment gateway here!")}
-        >
-          Proceed to Payment
-        </button>
+        <Elements stripe={stripePromise} options={{ clientSecret }}>
+          <CheckoutForm />
+        </Elements>
       </div>
     </div>
   );
