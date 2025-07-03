@@ -129,7 +129,6 @@
 //   );
 // }
 
-
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
@@ -148,8 +147,8 @@ import ProductDetails from "./pages/customer/ProductDetails.jsx";
 import CartScreen from "./pages/customer/CartScreen.jsx";
 import CustomerNav from "./components/CustomerNav.jsx";
 
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import BrowseProducts from "./pages/customer/BrowseProducts.jsx";
 import LandingPage from "./pages/LandingPage.jsx";
 import ManageProductPage from "./pages/supplier/ManageProductPage .jsx";
@@ -160,8 +159,14 @@ import PaymentPage from "./pages/customer/PaymentPage.jsx";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import PaymentSuccess from "./pages/customer/PaymentSuccess.jsx";
+import useAuth from "./hooks/useAuth";
+import ProductPageWrapper from "./components/ProductPageWrapper.jsx";
+import CartPageWrapper from "./components/CartPageWrapper.jsx";
+import BrowseProductsWrapper from "./components/BrowseProductsWrapper.jsx";
 // Replace with your actual publishable key
-const stripePromise = loadStripe("pk_test_51RIB6zQRjsbxdshsU28v5y1LMUOZeXBgdUgf2ErC3qjRuKh42fShu6n62l0Ji2CZctTDLCPZryfmqHBmM1wiKk8S00pjKgSEEm");
+const stripePromise = loadStripe(
+  "pk_test_51RIB6zQRjsbxdshsU28v5y1LMUOZeXBgdUgf2ErC3qjRuKh42fShu6n62l0Ji2CZctTDLCPZryfmqHBmM1wiKk8S00pjKgSEEm"
+);
 
 // Layout wrapper for customer routes
 function CustomerLayout() {
@@ -191,24 +196,54 @@ export default function App() {
               </ProtectedRoute>
             }
           />
-          <Route
+          {/* <Route
             path="/browse"
             element={
               <ProtectedRoute allowedRoles={["customer"]}>
                 <CustomerNav />
-                 <BrowseProducts />
+                <BrowseProducts />
+              </ProtectedRoute>
+            }
+          /> */}
+          <Route
+            path="/browse"
+            element={
+              <ProtectedRoute allowedRoles={["customer","guest"]}>
+                <BrowseProductsWrapper />
               </ProtectedRoute>
             }
           />
 
+
+          {/* <Route
+            path="/product/:id"
+            element={
+              // <ProtectedRoute allowedRoles={["customer"]}>
+              <>
+                <CustomerNav />
+                <ProductDetails />
+              </>
+              // </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/cart"
+            element={
+             // <ProtectedRoute allowedRoles={["customer"]}>
+                <>
+                  <CustomerNav />
+                  <CartScreen />
+                </>
+             // </ProtectedRoute>
+            }
+          /> */}
+
           <Route
             path="/product/:id"
             element={
-              <ProtectedRoute allowedRoles={["customer"]}>
-                <>
-                  <CustomerNav />
-                  <ProductDetails />
-                </>
+              <ProtectedRoute allowedRoles={["customer", "guest"]}>
+                <ProductPageWrapper />
               </ProtectedRoute>
             }
           />
@@ -216,11 +251,8 @@ export default function App() {
           <Route
             path="/cart"
             element={
-              <ProtectedRoute allowedRoles={["customer"]}>
-                <>
-                  <CustomerNav />
-                  <CartScreen />
-                </>
+              <ProtectedRoute allowedRoles={["customer", "guest"]}>
+                <CartPageWrapper />
               </ProtectedRoute>
             }
           />
@@ -250,13 +282,12 @@ export default function App() {
             }
           />
           <Route
-            path="/payment-success"
+            path="/payment-success/*"
             element={
               <ProtectedRoute allowedRoles={["customer"]}>
                 <>
                   <CustomerNav />
                   <PaymentSuccess />
-              
                 </>
               </ProtectedRoute>
             }
@@ -295,7 +326,7 @@ export default function App() {
               </ProtectedRoute>
             }
           />
-           <Route
+          <Route
             path="/supplier/products/"
             element={
               <ProtectedRoute allowedRoles={["supplier"]}>

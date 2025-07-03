@@ -107,10 +107,38 @@ export const getSupplierDashboard = async (req, res) => {
   }
 };
 
+// export const getAllSupplierOrders = async (req, res) => {
+//   const orders = await Order.find().populate("customer items.product");
+//   res.json(orders);
+// };
+
+
+// GET /api/supplier/orders
 export const getAllSupplierOrders = async (req, res) => {
-  const orders = await Order.find().populate("customer items.product");
-  res.json(orders);
+  try {
+    const supplierId = req.user._id;
+
+    // Get all orders that include items with products created by the logged-in supplier
+    const orders = await Order.find()
+      .populate("customer")
+      .populate({
+        path: "items.product",
+        populate: { path: "supplier" }
+      });
+
+    // Filter only those orders that contain at least one product by the supplier
+    const filteredOrders = orders.filter(order =>
+      order.items.some(item =>
+        item.product?.supplier?._id.toString() === supplierId.toString()
+      )
+    );
+
+    res.json(filteredOrders);
+  } catch (error) {
+    res.status(500).json({ message: "Failed to fetch supplier orders", error: error.message });
+  }
 };
+
 
 export const deleteSupplierOrder = async (req, res) => {
   await Order.findByIdAndDelete(req.params.id);
@@ -131,10 +159,27 @@ export const updateSupplierOrderStatus = async (req, res) => {
   res.json(updated);
 };
 
+// export const getSupplierProducts = async (req, res) => {
+//   const products = await Product.find().populate("supplier");
+//   res.json(products);
+// };
+
+
+
+// GET /api/supplier/products
 export const getSupplierProducts = async (req, res) => {
-  const products = await Product.find().populate("supplier");
-  res.json(products);
+  try {
+    const supplierId = req.user._id;
+
+    const products = await Product.find({ supplier: supplierId }).populate("supplier");
+
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({ message: "Failed to fetch supplier products", error: error.message });
+  }
 };
+
+
 
 export const updateSupplierProduct = async (req, res) => {
   try {

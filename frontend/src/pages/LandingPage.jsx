@@ -133,7 +133,7 @@ function LandingPage() {
               1000+ happy customers nationwide
             </p>
             <div className="cta-buttons">
-              <Link to="/login" className="btn primary">
+              <Link to="/browse" className="btn primary">
                 <span>Browse Products</span>
                 <FiArrowRight className="icon" />
               </Link>
@@ -143,7 +143,9 @@ function LandingPage() {
             </div>
           </div>
           <div className="hero-image">
+            <Link to="/login">
             <img src={front2} alt="Happy animals" className="floating" />
+            </Link>
             <div className="decoration-circle"></div>
           </div>
         </div>
