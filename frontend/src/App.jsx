@@ -163,6 +163,7 @@ import useAuth from "./hooks/useAuth";
 import ProductPageWrapper from "./components/ProductPageWrapper.jsx";
 import CartPageWrapper from "./components/CartPageWrapper.jsx";
 import BrowseProductsWrapper from "./components/BrowseProductsWrapper.jsx";
+import OrderDetails from "./pages/customer/OrderDetails.jsx";
 // Replace with your actual publishable key
 const stripePromise = loadStripe(
   "pk_test_51RIB6zQRjsbxdshsU28v5y1LMUOZeXBgdUgf2ErC3qjRuKh42fShu6n62l0Ji2CZctTDLCPZryfmqHBmM1wiKk8S00pjKgSEEm"
@@ -208,12 +209,11 @@ export default function App() {
           <Route
             path="/browse"
             element={
-              <ProtectedRoute allowedRoles={["customer","guest"]}>
+              <ProtectedRoute allowedRoles={["customer", "guest"]}>
                 <BrowseProductsWrapper />
               </ProtectedRoute>
             }
           />
-
 
           {/* <Route
             path="/product/:id"
@@ -292,6 +292,20 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+
+          <Route
+            path="/orders/:id"
+            element={
+              <ProtectedRoute allowedRoles={["customer"]}>
+                <>
+                  <CustomerNav />
+                  <OrderDetails />
+                </>
+              </ProtectedRoute>
+            }
+          />
+
+
 
           {/* Supplier Routes */}
           <Route

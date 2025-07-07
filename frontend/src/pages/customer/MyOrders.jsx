@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import api from '../../api';
 import { FiBox, FiClock, FiCheckCircle, FiTruck, FiAlertCircle } from 'react-icons/fi';
 import './MyOrders.css';
+import { useNavigate } from "react-router-dom";
 
 const MyOrders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -100,7 +102,7 @@ const MyOrders = () => {
                 </ul>
               </div>
 
-              <button className="order-action">
+              <button className="order-action view-button" onClick={() => navigate(`/orders/${order._id}`)}>
                 View Details
               </button>
             </div>
