@@ -805,13 +805,14 @@ a {
   padding: 4rem 1rem 2rem;
 }
 
-.footer-content {
+/* .footer-content {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   gap: 3rem;
   max-width: 1200px;
   margin: 0 auto;
-}
+} */
+ 
 
 @media (min-width: 768px) {
   .footer-content {
@@ -867,6 +868,10 @@ a {
   grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
 }
+/* .footer-bottom{
+  display: flex;
+  align-items: center;
+} */
 
 @media (min-width: 768px) {
   .footer-links {

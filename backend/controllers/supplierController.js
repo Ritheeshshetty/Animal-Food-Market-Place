@@ -343,3 +343,92 @@ export const updateProductStock = async (req, res) => {
     res.status(500).json({ message: "Failed to update product" });
   }
 };
+
+
+
+
+
+
+
+// export const getSupplierSalesTrends = async (req, res) => {
+//   try {
+//     const orders = await Order.find({ status: "delivered" }).populate("items.product");
+
+//     const dailySales = {};
+
+//     orders.forEach(order => {
+//       order.items.forEach(item => {
+//         if (item.product.supplier.toString() === req.user.id) {
+//           const date = order.createdAt.toISOString().split("T")[0];
+//           dailySales[date] = (dailySales[date] || 0) + item.price * item.quantity;
+//         }
+//       });
+//     });
+
+//     const trends = Object.entries(dailySales).map(([date, amount]) => ({ date, amount }));
+
+//     res.json({ trends });
+//   } catch (err) {
+//     res.status(500).json({ error: "Failed to fetch sales trends" });
+//   }
+// };
+
+
+export const getSupplierSalesTrends = async (req, res) => {
+  try {
+    const supplierId = req.user._id;
+
+    const deliveredOrders = await Order.find({ status: "delivered" });
+
+    const trendsMap = {};
+
+    for (const order of deliveredOrders) {
+      for (const item of order.items) {
+        const product = await Product.findById(item.product).select("supplier");
+
+        // Check if the product belongs to the current supplier
+        if (product && product.supplier.toString() === supplierId.toString()) {
+          const date = order.createdAt.toISOString().split("T")[0];
+          const saleAmount = item.price * item.quantity;
+
+          trendsMap[date] = (trendsMap[date] || 0) + saleAmount;
+        }
+      }
+    }
+
+    const trends = Object.entries(trendsMap).map(([date, amount]) => ({
+      date,
+      amount,
+    }));
+
+    res.json({ trends });
+  } catch (err) {
+    console.error("Supplier sales trend error:", err);
+    res.status(500).json({ error: "Server error fetching sales trends" });
+  }
+};
+
+
+export const getSupplierTopProducts = async (req, res) => {
+  try {
+    const supplierId = req.user._id;
+
+    // Get all products from this supplier
+    const products = await Product.find({ supplier: supplierId });
+
+    // Sort by salesCount descending
+    const topProducts = products
+      .sort((a, b) => b.salesCount - a.salesCount)
+      .slice(0, 5)
+      .map((product) => ({
+        name: product.name,
+        salesCount: product.salesCount,
+        image: product.image,
+      }));
+
+    res.json({ topProducts });
+  } catch (err) {
+    console.error("Top products fetch error:", err);
+    res.status(500).json({ error: "Server error fetching top products" });
+  }
+};

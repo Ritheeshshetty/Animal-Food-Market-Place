@@ -156,3 +156,31 @@ export const getFeaturedProducts = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+
+
+
+// productController.js
+
+
+export const rateProduct = async (req, res) => {
+  const { productId } = req.params;
+  const { rating } = req.body;
+
+  if (!rating || rating < 1 || rating > 5) {
+    return res.status(400).json({ error: "Invalid rating value" });
+  }
+
+  try {
+    const product = await Product.findById(productId);
+    if (!product) return res.status(404).json({ error: "Product not found" });
+
+    product.ratings.push(rating);
+    await product.save();
+
+    res.json({ message: "Rating added", averageRating: product.ratings.reduce((a, b) => a + b, 0) / product.ratings.length });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error adding rating" });
+  }
+};

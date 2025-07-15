@@ -255,14 +255,14 @@ function CustomerDashboard() {
                       loading="lazy"
                     />
                   </Link>
-                  <button
+                  {/* <button
                     className={`favorite-button ${
                       product.isFavorite ? "active" : ""
                     }`}
                     onClick={() => toggleFavorite(product._id)}
                   >
                     <FiHeart />
-                  </button>
+                  </button> */}
                   <div className="product-badge">
                     <span
                       className={`badge ${

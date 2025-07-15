@@ -172,7 +172,7 @@ function LandingPage() {
             >
               <div className="category-icon">{category.icon}</div>
               <h3>{category.name}</h3>
-              <p className="count">{category.count}+ Products</p>
+              {/* <p className="count">{category.count}+ Products</p> */}
               <div className="hover-indicator"></div>
             </Link>
           ))}
@@ -484,8 +484,8 @@ function LandingPage() {
 
       {/* Footer */}
       <footer className="footer">
-        <div className="footer-content">
-          <div className="footer-brand">
+        {/* <div className="footer-content"> */}
+          {/* <div className="footer-brand">
             <h3>Animal Food Marketplace</h3>
             <p>Premium nutrition for all your animals</p>
             <div className="social-links">
@@ -502,8 +502,8 @@ function LandingPage() {
                 <i className="fab fa-linkedin"></i>
               </a>
             </div>
-          </div>
-          <div className="footer-links">
+          </div> */}
+          {/* <div className="footer-links">
             <div className="link-column">
               <h4>Shop</h4>
               <Link to="/browse">All Products</Link>
@@ -531,8 +531,8 @@ function LandingPage() {
               <Link to="/terms">Terms of Service</Link>
               <Link to="/cookies">Cookie Policy</Link>
             </div>
-          </div>
-        </div>
+          </div> */}
+        {/* </div> */}
         <div className="footer-bottom">
           <p>
             &copy; {new Date().getFullYear()} Animal Food Marketplace. All

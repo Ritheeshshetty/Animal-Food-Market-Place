@@ -77,6 +77,7 @@ export const getAnalytics = async (req, res) => {
     });
 
     const productStats = {};
+
     for (const order of orders) {
       for (const item of order.items) {
         const productId = item.product.toString();
@@ -84,27 +85,29 @@ export const getAnalytics = async (req, res) => {
           (productStats[productId] || 0) + item.quantity;
       }
     }
+    // console.log("Product Stats:", productStats);
 
     const topProducts = await Promise.all(
       Object.entries(productStats)
-        .sort((a, b) => b[1] - a[1])
+        .sort((a, b) => b[1] - a[1]) // sort by count descending
         .slice(0, 5)
         .map(async ([productId, count]) => {
           const product = await Product.findById(productId);
-          return { product, count };
+          return {
+            name: product?.name || "Unknown Product",
+            salesCount: count,
+          };
         })
     );
 
     const now = new Date();
     const sevenDaysAgo = new Date();
-    sevenDaysAgo.setDate(now.getDate() - 7);
+    sevenDaysAgo.setDate(now.getDate() - 30);
 
     const recentOrders = await Order.find({
       status: "delivered",
       createdAt: { $gte: sevenDaysAgo },
     });
-
-  
 
     const dailySalesMap = {};
     recentOrders.forEach((order) => {

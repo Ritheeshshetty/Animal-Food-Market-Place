@@ -9,6 +9,7 @@ import {
 import AdminNav from "../../components/AdminNav";
 import api from "../../api";
 import SalesLineChart from "../../components/charts/SalesLineChart";
+import TopProductsChart from "../../components/charts/TopProductsChart";
 
 export default function AdminDashboard() {
   const [analytics, setAnalytics] = useState({
@@ -144,11 +145,12 @@ export default function AdminDashboard() {
             {/* Bottom Sections */}
             <div className="admin-bottom-grid-main">
               {/* Top Products */}
-              <div className="admin-list-card-main">
+
+              {/* <div className="admin-list-card-main">
                 <h3 className="admin-list-title-main">Top Selling Products</h3>
-                {analytics.topProducts.length > 0 ? (
+                {analytics.topProducts?.length > 0 ? (
                   <ul className="admin-list-main">
-                    {analytics.topProducts.slice(0, 5).map((product, index) => (
+                    {analytics.topProducts.map((product, index) => (
                       <li key={index} className="admin-list-item-main">
                         <span className="admin-list-item-text-main">
                           {product.name}
@@ -165,6 +167,31 @@ export default function AdminDashboard() {
                     <p>No product data available</p>
                   </div>
                 )}
+              </div> */}
+              <div className="admin-list-card-main">
+                <h3 className="admin-list-title-main">Top Selling Products</h3>
+                {analytics.topProducts?.length > 0 ? (
+                  <>
+                    <TopProductsChart data={analytics.topProducts} />
+                    {/* <ul className="admin-list-main">
+                      {analytics.topProducts.map((product, index) => (
+                        <li key={index} className="admin-list-item-main">
+                          <span className="admin-list-item-text-main">
+                            {product.name}
+                          </span>
+                          <span className="admin-list-item-value-main">
+                            {product.salesCount} sold
+                          </span>
+                        </li>
+                      ))}
+                    </ul> */}
+                  </>
+                ) : (
+                  <div className="admin-empty-state-main">
+                    <FiPackage size={32} className="admin-empty-icon-main" />
+                    <p>No product data available</p>
+                  </div>
+                )}
               </div>
 
               {/* Supplier Performance */}
@@ -172,17 +199,26 @@ export default function AdminDashboard() {
                 <h3 className="admin-list-title-main">Supplier Performance</h3>
                 {analytics.supplierPerformance.length > 0 ? (
                   <ul className="admin-list-main">
-                    {analytics.supplierPerformance.slice(0, 5).map((supplier, index) => (
-                      <li key={index} className="admin-list-item-main">
-                        <span className="admin-list-item-text-main">{supplier.name}</span>
-                        <span className={`admin-list-item-value-main ${
-                          supplier.rating >= 4 ? 'admin-rating-good-main' : 
-                          supplier.rating >= 2.5 ? 'admin-rating-medium-main' : 'admin-rating-poor-main'
-                        }`}>
-                          {supplier.rating.toFixed(1)} ★
-                        </span>
-                      </li>
-                    ))}
+                    {analytics.supplierPerformance
+                      .slice(0, 5)
+                      .map((supplier, index) => (
+                        <li key={index} className="admin-list-item-main">
+                          <span className="admin-list-item-text-main">
+                            {supplier.name}
+                          </span>
+                          <span
+                            className={`admin-list-item-value-main ${
+                              supplier.rating >= 4
+                                ? "admin-rating-good-main"
+                                : supplier.rating >= 2.5
+                                ? "admin-rating-medium-main"
+                                : "admin-rating-poor-main"
+                            }`}
+                          >
+                            {supplier.rating.toFixed(1)} ★
+                          </span>
+                        </li>
+                      ))}
                   </ul>
                 ) : (
                   <div className="admin-empty-state-main">

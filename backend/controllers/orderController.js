@@ -265,8 +265,8 @@ export const getSupplierOrders = async (req, res) => {
 export const getOrderById = async (req, res) => {
   try {
     const order = await Order.findById(req.params.id)
-      .populate("customer", "name email") // optional
-      .populate("items.product", "name"); // get product name
+      .populate("customer", "name email") 
+      .populate("items.product", "name"); 
 
     if (!order) {
       return res.status(404).json({ message: "Order not found" });

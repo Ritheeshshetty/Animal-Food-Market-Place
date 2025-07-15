@@ -164,6 +164,9 @@ import ProductPageWrapper from "./components/ProductPageWrapper.jsx";
 import CartPageWrapper from "./components/CartPageWrapper.jsx";
 import BrowseProductsWrapper from "./components/BrowseProductsWrapper.jsx";
 import OrderDetails from "./pages/customer/OrderDetails.jsx";
+import CustomerReviews from "./pages/customer/CustomerReviews.jsx";
+import SupplierReviews from "./pages/supplier/SupplierReviews.jsx";
+import SupplierReports from "./pages/supplier/SupplierReports.jsx";
 // Replace with your actual publishable key
 const stripePromise = loadStripe(
   "pk_test_51RIB6zQRjsbxdshsU28v5y1LMUOZeXBgdUgf2ErC3qjRuKh42fShu6n62l0Ji2CZctTDLCPZryfmqHBmM1wiKk8S00pjKgSEEm"
@@ -304,6 +307,17 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/customer/reviews"
+            element={
+              <ProtectedRoute allowedRoles={["customer"]}>
+                <>
+                  <CustomerNav />
+                  <CustomerReviews />
+                </>
+              </ProtectedRoute>
+            }
+          />
 
 
 
@@ -364,6 +378,23 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/supplier/reviews"
+            element={
+              <ProtectedRoute allowedRoles={["supplier"]}>
+                <SupplierReviews />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/supplier/reports"
+            element={
+              <ProtectedRoute allowedRoles={["supplier"]}>
+                <SupplierReports />
+              </ProtectedRoute>
+            }
+          />
+
 
           {/* Admin Routes */}
           <Route

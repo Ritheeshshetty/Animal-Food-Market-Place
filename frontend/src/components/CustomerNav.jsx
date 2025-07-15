@@ -117,17 +117,17 @@ export default function NavBar() {
             </Link>
           </li>
           <li className="navbar-item">
-            <Link to="/reviews" className="navbar-link">
+            <Link to="/customer/reviews" className="navbar-link">
               <MdOutlineRateReview className="navbar-link-icon" />
               <span className="navbar-link-text">Reviews</span>
             </Link>
           </li>
-          <li className="navbar-item">
+          {/* <li className="navbar-item">
             <Link to="/profile" className="navbar-link">
               <FaUser className="navbar-link-icon" />
               <span className="navbar-link-text">Profile</span>
             </Link>
-          </li>
+          </li> */}
         </ul>
 
         <div className="navbar-actions">

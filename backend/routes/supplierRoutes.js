@@ -6,6 +6,8 @@ import {
   getSupplierDashboard,
   getSupplierProduct,
   getSupplierProducts,
+  getSupplierSalesTrends,
+  getSupplierTopProducts,
   updateProductStock,
   updateSupplierOrderStatus,
   updateSupplierProduct,
@@ -13,7 +15,6 @@ import {
 import authMiddleware from "../middlewares/authMiddleware.js";
 import roleMiddleware from "../middlewares/roleMiddleware.js";
 import upload from "../middlewares/uploadMiddleware.js";
-
 
 const router = express.Router();
 
@@ -28,6 +29,20 @@ router.get(
   authMiddleware,
   roleMiddleware("supplier"),
   getAllSupplierOrders
+);
+
+router.get(
+  "/reports/sales-trends",
+  authMiddleware,
+  roleMiddleware("supplier"),
+  getSupplierSalesTrends
+);
+
+router.get(
+  "/reports/top-products",
+  authMiddleware,
+  roleMiddleware("supplier"),
+  getSupplierTopProducts
 );
 router.put(
   "/orders/:id/status",
@@ -47,6 +62,8 @@ router.get(
   roleMiddleware("supplier"),
   getSupplierProduct
 );
+
+
 // router.patch(
 //   "/products/:productId/edit",
 //   authMiddleware,
@@ -61,14 +78,12 @@ router.patch(
   updateSupplierProduct
 );
 
-
 router.delete(
   "/products/:id",
   authMiddleware,
   roleMiddleware("supplier"),
   deleteSupplierProduct
 );
-
 
 router.get(
   "/manage-stock/:productId",

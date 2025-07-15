@@ -260,7 +260,7 @@ function SupplierDashboard() {
           <div className="supplier-dashboard-card-icon-main">
             <MdOutlineReviews size={28} />
           </div>
-          <h3 className="supplier-dashboard-card-title-main">Product Reviews</h3>
+          <h3 className="supplier-dashboard-card-title-main">Order Reviews</h3>
           <p className="supplier-dashboard-card-text-main">View customer feedback</p>
         </Link>
       </div>
@@ -280,7 +280,7 @@ function SupplierDashboard() {
                   <th>Date</th>
                   <th>Amount</th>
                   <th>Status</th>
-                  <th>Action</th>
+                  {/* <th>Action</th> */}
                 </tr>
               </thead>
               <tbody>
@@ -295,14 +295,14 @@ function SupplierDashboard() {
                         {order.status}
                       </span>
                     </td>
-                    <td>
+                    {/* <td>
                       <Link 
                         to={`/supplier/orders/${order.id}`} 
                         className="supplier-dashboard-order-action-main"
                       >
                         View
                       </Link>
-                    </td>
+                    </td> */}
                   </tr>
                 ))}
               </tbody>
