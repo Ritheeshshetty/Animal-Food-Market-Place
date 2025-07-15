@@ -1,7 +1,13 @@
+<<<<<<< HEAD
+=======
+
+```markdown
+>>>>>>> f6d4f73ef037c211611b4ef0df4c5b1e9a937acf
 # 🐾 Animal Food Marketplace 🛒
 
 A modern, user-friendly platform for buying and selling pet and livestock food products. Customers browse and buy healthy foods for their animals, suppliers manage listings and analyze business performance, and admins ensure everything runs smoothly.
 
+<<<<<<< HEAD
 ![Animal Food Marketplace Banner](./assets/animal_food_market 📦 At a Glance
 
 |       | Customers     | Suppliers        | Admin               |
@@ -21,6 +27,10 @@ A modern, user-friendly platform for buying and selling pet and livestock food p
 - **Data-driven analytics:** Visualize your sales and growth.
 - **JWT authentication:** Secure access and privacy.
 - **Mobile-first responsive UI:** Looks beautiful on any device.
+=======
+<img width="2850" height="1461" alt="image" src="https://github.com/user-attachments/assets/48cce9b6-bbe9-44c7-8aed-96edc132badd" />
+
+>>>>>>> f6d4f73ef037c211611b4ef0df4c5b1e9a937acf
 
 ## 🏗️ Project Structure
 
@@ -127,4 +137,23 @@ _Coming soon!_
 
 MIT © 2023 Animal Food Marketplace
 
+<<<<<<< HEAD
 > _Ready to make animal nutrition easy and accessible to all—one order at a time._
+=======
+Key improvements made:
+1. Added emojis for better visual scanning
+2. Organized features into clear sections
+3. Improved code block formatting
+4. Added API endpoint table
+5. Enhanced technology stack presentation
+6. Added development guidelines
+7. Improved overall readability with consistent spacing
+8. Added placeholder for license section
+9. Included visual hierarchy with headings
+
+You can further enhance this by:
+- Adding real screenshots
+- Including contribution guidelines
+- Adding a live demo link
+- Setting up badges for build status, dependencies, etc.
+>>>>>>> f6d4f73ef037c211611b4ef0df4c5b1e9a937acf
