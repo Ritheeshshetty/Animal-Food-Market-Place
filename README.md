@@ -4,7 +4,8 @@
 
 A full-stack web application for buying and selling pet and livestock food products. Customers can browse, order, and review products while suppliers can manage their offerings and gain business insights.
 
-![Project Banner](https://via.placeholder.com/800x200?text=Animal+Food+Marketplace) <!-- Consider adding a real banner image -->
+![Project Banner](<img width="2850" height="1461" alt="image" src="https://github.com/user-attachments/assets/5b899f37-0b4b-49c7-bac1-5363c0a716ad" />
+) <!-- Consider adding a real banner image -->
 
 ## 🏗️ Project Structure
 
