@@ -4,8 +4,8 @@
 
 A full-stack web application for buying and selling pet and livestock food products. Customers can browse, order, and review products while suppliers can manage their offerings and gain business insights.
 
-![Project Banner](<img width="2850" height="1461" alt="image" src="https://github.com/user-attachments/assets/5b899f37-0b4b-49c7-bac1-5363c0a716ad" />
-) <!-- Consider adding a real banner image -->
+<img width="2850" height="1461" alt="image" src="https://github.com/user-attachments/assets/48cce9b6-bbe9-44c7-8aed-96edc132badd" />
+
 
 ## 🏗️ Project Structure
 
