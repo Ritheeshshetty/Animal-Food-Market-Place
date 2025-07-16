@@ -98,8 +98,78 @@ npm run dev
 - **Security:** JWT auth, bcrypt for passwords
 
 ## 🎨 Screenshots
+ADMIN:
 
-> _Add your own app screenshots here for maximum appeal!_
+Admin page Dashboard:
+![alt text](image-3.png)
+![alt text](image-4.png)
+
+Admin Page User:
+![alt text](image-5.png)
+
+Admin Product Management:
+![alt text](image-6.png)
+
+Admin Order Management:
+![alt text](image-7.png)
+
+SUPPLIER:
+
+Supplier Dashboard:
+![alt text](image-8.png)
+
+Supplier add product section:
+![alt text](image-9.png)
+
+Supplier Inverntory Managment:
+![alt text](image-10.png)
+
+Supplier View Orders:
+![alt text](image-11.png)
+
+Supplier Product Management:
+![alt text](image-12.png)
+
+Supplier Sales Report:
+![alt text](image-13.png)
+
+
+Supplier Customer Reviews:
+![alt text](image-14.png)
+
+CUSTOMER:
+
+Customer Dashboard:
+![alt text](image-15.png)
+
+Customer Recommended section based on top selling and top rated products:
+![alt text](image-17.png)
+
+Customer Browse Products:
+![alt text](image-16.png)
+
+Customer Cart page:
+![alt text](image-18.png)
+
+Customer Payment Page:
+![alt text](image-19.png)
+![alt text](image-20.png)
+
+Customer Order Tracking:
+![alt text](image-21.png) 
+![alt text](image-22.png)
+
+Customer Reviews:
+![alt text](image-23.png)
+
+Landing Page:
+![alt text](image.png)
+
+Feature Section in Landing page
+![alt text](image-1.png)
+
+Product Details Section:
+![alt text](image-2.png)
 
 ## 📊 Analytics Example
 
