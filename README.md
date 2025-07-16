@@ -185,7 +185,7 @@ const SupplierDashboard = () => {
 
 ## 📢 Badges
 
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/your-username/animal-food-marketplace](https://img.shields.io/b 🤝 Contributing
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/Ritheeshshetty/animal-food-marketplace](https://img.shields.io/b 🤝 Contributing
 
 We love contributions! Please see `CONTRIBUTING.md` for guidelines, open an issue to suggest a feature, or submit a pull request to help the project grow.
 
