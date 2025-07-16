@@ -2,7 +2,7 @@
 
 A modern, user-friendly platform for buying and selling pet and livestock food products. Customers browse and buy healthy foods for their animals, suppliers manage listings and analyze business performance, and admins ensure everything runs smoothly.
 
-![Animal Food Marketplace Banner](./assets/animal_food_market 📦 At a Glance
+![alt text](<Brown Simple Discount Food Pet Banner.png>) 📦 At a Glance
 
 |       | Customers     | Suppliers        | Admin               |
 |-------|--------------|------------------|---------------------|
