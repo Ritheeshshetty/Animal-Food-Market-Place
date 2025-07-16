@@ -64,7 +64,7 @@ function CustomerDashboard() {
               selectedOption: p.quantityOptions.find(
                 (opt) => opt.label === newLabel
               ),
-              cartQuantity: 1, // reset to 1 on quantity change
+              cartQuantity: 0,
             }
           : p
       )
@@ -94,7 +94,7 @@ function CustomerDashboard() {
         )
       );
 
-      // Remove animation class after animation duration (e.g. 700ms)
+
       setTimeout(() => {
         setRecommendedProducts((prev) =>
           prev.map((p) =>
@@ -146,40 +146,6 @@ function CustomerDashboard() {
 
   return (
     <div className="dashboard-container">
-      {/* Header */}
-      {/* <header className="dashboard-header">
-        <div className="header-background">
-          <div className="header-overlay">
-            <div className="header-content">
-              <div className="header-left">
-                <h1 className="dashboard-title">
-                  Fuel Their Joy with Every Bite
-                </h1>
-                <p className="dashboard-subtitle">
-                  Discover nutrient-rich food for pets and livestock — delivered
-                  fresh to your doorstep.
-                </p>
-                <div className="header-actions">
-                  <Link to="/browse" className="browse-cta">
-                    Shop Now
-                  </Link>
-                  <Link to="/offers" className="browse-secondary">
-                    View Offers
-                  </Link>
-                </div>
-              </div>
-              <div className="header-right hero-image-container">
-                <img
-                  src={dog}
-                  alt="Happy Pets and Livestock"
-                  className="hero-image"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-        
-      </header> */}
        <header className="dashboard-header">
       <div className="header-background">
         <div className="header-overlay">
@@ -255,14 +221,7 @@ function CustomerDashboard() {
                       loading="lazy"
                     />
                   </Link>
-                  {/* <button
-                    className={`favorite-button ${
-                      product.isFavorite ? "active" : ""
-                    }`}
-                    onClick={() => toggleFavorite(product._id)}
-                  >
-                    <FiHeart />
-                  </button> */}
+                
                   <div className="product-badge">
                     <span
                       className={`badge ${
